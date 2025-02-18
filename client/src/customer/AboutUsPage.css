@@ -1,0 +1,96 @@
+/* AboutUsPage.css */
+.about-us {
+    padding: 80px 20px;
+    background: linear-gradient(to right, #f8e3d2, #cba66f); 
+    text-align: center;
+    border-radius: 15px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    margin-top: 50px;
+}
+
+.about-us h3 {
+    font-size: 2.5rem;
+    color: #4a3f35;
+    margin-bottom: 30px;
+    font-weight: bold;
+    letter-spacing: 3px;
+}
+
+.about-content {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 40px;
+    flex-wrap: wrap;
+    margin-top: 50px;
+}
+
+.about-text {
+    width: 60%;
+    font-size: 1.2rem;
+    line-height: 1.8;
+    color: #6d5c4f;
+    text-align: left;
+}
+
+.about-text h2 {
+    font-size: 2.5rem;
+    margin-bottom: 20px;
+    font-weight: 600;
+    color: #4a3f35;
+}
+
+.about-text p {
+    margin-bottom: 20px;
+}
+
+.about-image {
+    width: 30%;
+    border-radius: 50%;
+    overflow: hidden;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transform: scale(1);
+    transition: transform 0.3s ease;
+}
+
+.about-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.about-image:hover {
+    transform: scale(1.05);
+}
+
+@media (max-width: 768px) {
+    .about-content {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .about-text {
+        width: 100%;
+        animation: slideIn 1.5s ease-in-out;
+    }
+
+    .about-image {
+        width: 60%;
+        margin-top: 20px;
+    }
+
+    .about-us h3 {
+        font-size: 2.5rem;
+    }
+}
+@keyframes slideIn {
+    from {
+        opacity: 0;
+        transform: translateX(-100%);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+

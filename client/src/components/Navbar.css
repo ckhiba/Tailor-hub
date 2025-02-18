@@ -1,0 +1,44 @@
+/* Make navbar transparent */
+.navbar {
+  background-color: transparent !important;
+  box-shadow: none; /* Remove shadow */
+  border: none; /* Remove any border */
+}
+
+.navbar-brand{
+  margin-left: -100px;
+}
+
+/* Ensure dropdown opens on hover */
+.navbar-nav .dropdown-menu {
+  position: absolute;
+  left: 0;
+  display: none;
+}
+
+.navbar-nav .dropdown:hover > .dropdown-menu {
+  display: block;
+}
+
+.dropdown-submenu {
+  position: relative;
+}
+
+.dropdown-submenu > .dropdown-menu {
+  top: 0;
+  left: 100%;
+  margin-top: -1px;
+}
+
+/* Align navbar items from left to right */
+.navbar-collapse {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.navbar-nav {
+  display: flex;
+  gap: 20px; /* Adjust spacing */
+}
+

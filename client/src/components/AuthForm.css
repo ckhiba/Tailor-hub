@@ -1,0 +1,96 @@
+/* Full-screen gradient background */
+body {
+    margin: 0;
+    padding: 0;
+    height: 100vh;
+    background: linear-gradient(135deg, #f8e3d2, #b98b46); /* Light to medium beige gradient */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: "Poppins", sans-serif;
+}
+
+/* Auth form container with glassmorphism effect */
+.auth-box {
+    background: rgba(255, 255, 255, 0.9); /* Light transparent background */
+    padding: 30px;
+    border-radius: 12px;
+    text-align: center;
+    width: 360px;
+    box-shadow: 0px 8px 20px rgba(0, 0, 0, 0.3);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    backdrop-filter: blur(10px);
+}
+
+/* Form Title */
+.auth-box h2 {
+    font-size: 24px;
+    color: #4a3f35; /* Darker shade of brown for the title */
+    margin-bottom: 20px;
+}
+
+/* Input fields */
+.auth-box input,
+.auth-box select {
+    width: 100%;
+    padding: 12px;
+    margin: 10px 0;
+    border: 1px solid #b98b46; /* Beige border for input fields */
+    background: #f8e3d2; /* Light beige background */
+    color: #4a3f35; /* Dark brown text color */
+    border-radius: 6px;
+    transition: all 0.3s ease-in-out;
+}
+
+/* Input focus effect */
+.auth-box input:focus,
+.auth-box select:focus {
+    outline: none;
+    border-color: #b98b46; /* Highlight with the same beige color */
+    box-shadow: 0 0 8px rgba(185, 139, 70, 0.7);
+}
+
+/* Role selection dropdown */
+.role-selection {
+    margin-top: 10px;
+    text-align: left;
+}
+
+.role-selection label {
+    font-weight: bold;
+    color: #4a3f35; /* Dark brown for label */
+    display: block;
+    margin-bottom: 5px;
+}
+
+/* Submit Button */
+.auth-box button {
+    width: 100%;
+    padding: 12px;
+    background: #b98b46; /* Soft beige for button background */
+    color: white;
+    font-size: 16px;
+    font-weight: bold;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.3s ease-in-out;
+}
+
+/* Button Hover Effect */
+.auth-box button:hover {
+    background: #d8c3a5; /* Lighter beige shade on hover */
+}
+
+/* Login/Signup Toggle */
+.auth-box p {
+    cursor: pointer;
+    color: #b98b46; /* Soft beige for link text */
+    margin-top: 15px;
+    font-size: 14px;
+    transition: color 0.3s ease-in-out;
+}
+
+.auth-box p:hover {
+    color: #d8c3a5; /* Lighter beige shade on hover */
+}
