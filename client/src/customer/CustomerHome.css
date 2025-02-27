@@ -1,11 +1,10 @@
 body {
     margin: 0;
     padding: 0;
-    margin-bottom: 100%;
     font-family: Verdana, Geneva, Tahoma, sans-serif;
     background: linear-gradient(to right, #f8e3d2, #cba66f); /* Light gradient */
     color: #333;
-    height:max-content;
+    height:100%;
 }
 
 .hero {
@@ -49,7 +48,7 @@ p {
     color: #6d5c4f; /* Subtle coffee brown */
 }
 
-/* .btn {
+.btn {
     display: inline-block;
     padding: 12px 24px;
     font-size: 1rem;
@@ -64,7 +63,7 @@ p {
 .btn:hover {
     background: #b09075; 
     color: white;
-} */
+}
 
 .hero-image {
     position: relative;

@@ -16,7 +16,7 @@ const AboutUsPage = () => {
         <section className="about-us">
             <div className="about-content">
                 <div className="about-text" ref={textRef}>
-                <h3>About Us</h3>
+                <h1>About Us</h1>
                     <p>
                         We are a team of expert tailors, driven by a passion to deliver the highest quality tailoring services. 
                         From custom creations to the most delicate alterations, we focus on the smallest details to ensure that 

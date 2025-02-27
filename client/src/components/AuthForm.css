@@ -1,8 +1,9 @@
 /* Full-screen gradient background */
-body {
+.auth-container {
     margin: 0;
     padding: 0;
-    height: 100vh;
+    height: 100%;
+    width: 100%;
     background: linear-gradient(135deg, #f8e3d2, #b98b46); /* Light to medium beige gradient */
     display: flex;
     justify-content: center;

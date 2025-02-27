@@ -13,16 +13,14 @@
             <div className="container-home">
             <h1>Find Your Perfect Tailor</h1>
             <p>Custom fits & expert tailoring for all your needs.</p>
-            {/* <a href="#" className="btn">
+            <a href="/customer/service" className="btn">
                 Get Started
-            </a> */}
+            </a>
             </div>
             <div className="hero-image">
             <img src="/images/image_home.jpg" alt="Tailor at work" />
             </div>
         </div>
-        <ServicesPage />
-        <AboutUsPage />
         </>
     );
     }

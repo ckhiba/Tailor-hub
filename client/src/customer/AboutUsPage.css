@@ -1,18 +1,23 @@
 /* AboutUsPage.css */
 .about-us {
-    padding: 80px 20px;
-    background: linear-gradient(to right, #f8e3d2, #cba66f); 
-    text-align: center;
+    height: 90vh;
+    display: flex;
     border-radius: 15px;
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-    margin-top: 50px;
+    align-items: center;
+    justify-content: space-between;
+    text-align: center;
+    position: relative;
+    padding: 0 5%;
+    background: linear-gradient(to right, #f8e3d2, #cba66f); 
 }
 
-.about-us h3 {
+.about-us h1 {
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
     font-size: 2.5rem;
     color: #4a3f35;
     margin-bottom: 30px;
-    font-weight: bold;
+    /* font-weight: bold; */
     letter-spacing: 3px;
 }
 
