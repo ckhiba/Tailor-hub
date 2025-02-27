@@ -11,7 +11,7 @@
         <div className="hero">
             <div className="hero-overlay" />
             <div className="container-home">
-            <h1>Find Your Perfect Tailor,</h1>
+            <h1>Find Your Perfect Tailor,hi</h1>
             <p>Custom fits & expert tailoring for all your needs.</p>
             <a href="/customer/service" className="btn">
                 Get Started
