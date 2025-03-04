@@ -1,103 +1,81 @@
-    import React from "react";
-    import { Link } from "react-router-dom";
-    import "bootstrap/dist/css/bootstrap.min.css";
-    import "bootstrap/dist/js/bootstrap.bundle.min.js";
-    import "../components/Navbar.css"; // For additional styling
+import React, { useState, useEffect } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { FaBell, FaClipboardList } from "react-icons/fa"; // Import Icons
+import { FaUserCircle } from "react-icons/fa";
 
-    const Navbar = () => {
-    return (
-        <nav className="navbar navbar-expand-lg navbar-light bg-light">
-        <div className="container">
-            {/* Brand (Logo) */}
-            <Link className="navbar-brand fw-bold" to="/">
-            Tailoring Hub
-            </Link>
+import "./Navbar.css";
 
-            {/* Toggle Button */}
-            <button
-            className="navbar-toggler"
-            type="button"
-            data-bs-toggle="collapse"
-            data-bs-target="#navbarNav"
-            aria-controls="navbarNav"
-            aria-expanded="false"
-            aria-label="Toggle navigation"
-            >
-            <span className="navbar-toggler-icon"></span>
-            </button>
+const Navbar = () => {
+    const [notifications, setNotifications] = useState([]);
+    const [orders, setOrders] = useState([]);
+    const [unreadNotifications, setUnreadNotifications] = useState(0);
+    const [unreadOrders, setUnreadOrders] = useState(0);
+    const navigate = useNavigate();
 
-            {/* Navbar Items */}
-            <div className="collapse navbar-collapse justify-content-center" id="navbarNav">
-            <ul className="navbar-nav">
-                <li className="nav-item">
-                <Link className="nav-link" to="/customer/home">Home</Link>
-                </li>
-                <li className="nav-item">
-                <Link className="nav-link" to="/customer/service">Services</Link>
-                </li>
-                <li className="nav-item">
-                <Link className="nav-link" to="/customer/about">About Us</Link>
-                </li>
+    useEffect(() => {
+        // Fetch Notifications
+        fetch("http://localhost:5000/api/notifications")
+            .then((res) => res.json())
+            .then((data) => {
+                setNotifications(data);
+                setUnreadNotifications(data.filter((item) => !item.read).length);
+            })
+            .catch((error) => console.error("Error fetching notifications:", error));
 
-                {/* Categories Dropdown */}
-                <li className="nav-item dropdown">
-                <a
-                    className="nav-link dropdown-toggle"
-                    href="#"
-                    id="categoryDropdown"
-                    role="button"
-                    data-bs-toggle="dropdown"
-                    aria-expanded="false"
-                >
-                    Categories
-                </a>
-                <ul className="dropdown-menu" aria-labelledby="categoryDropdown">
-                    {/* Alteration Dropdown */}
-                    <li className="dropdown-submenu">
-                    <a className="dropdown-item dropdown-toggle" href="#">Alteration</a>
-                    <ul className="dropdown-menu">
-                        <li><Link className="dropdown-item" to="/alteration/men">Men</Link></li>
-                        <li><Link className="dropdown-item" to="/alteration/women">Women</Link></li>
-                        <li><Link className="dropdown-item" to="/alteration/boys">Boys</Link></li>
-                        <li><Link className="dropdown-item" to="/alteration/girls">Girls</Link></li>
-                    </ul>
-                    </li>
+        // Fetch Orders
+        fetch("http://localhost:5000/api/orders")
+            .then((res) => res.json())
+            .then((data) => {
+                setOrders(data);
+                setUnreadOrders(data.filter((order) => !order.seen).length);
+            })
+            .catch((error) => console.error("Error fetching orders:", error));
+    }, []);
 
-                    {/* Stitching Dropdown */}
-                    <li className="dropdown-submenu">
-                    <a className="dropdown-item dropdown-toggle" href="#">Stitching</a>
-                    <ul className="dropdown-menu">
-                        <li><Link className="dropdown-item" to="/stitching/men">Men</Link></li>
-                        <li><Link className="dropdown-item" to="/stitching/women">Women</Link></li>
-                        <li><Link className="dropdown-item" to="/stitching/boys">Boys</Link></li>
-                        <li><Link className="dropdown-item" to="/stitching/girls">Girls</Link></li>
-                    </ul>
-                    </li>
-
-                    {/* Customization Dropdown */}
-                    <li className="dropdown-submenu">
-                    <a className="dropdown-item dropdown-toggle" href="#">Customization</a>
-                    <ul className="dropdown-menu">
-                        <li><Link className="dropdown-item" to="/customization/men">Men</Link></li>
-                        <li><Link className="dropdown-item" to="/customization/women">Women</Link></li>
-                        <li><Link className="dropdown-item" to="/customization/boys">Boys</Link></li>
-                        <li><Link className="dropdown-item" to="/customization/girls">Girls</Link></li>
-                    </ul>
-                    </li>
-                </ul>
-                </li>
-
-                <li className="nav-item">
-                <Link className="nav-link" to="/Order">Order details</Link>
-                </li>
-                <li className="nav-item">
-                <Link className="nav-link" to="/Notification">Notification</Link>
-                </li>
-            </ul>
-            </div>
-        </div>
-        </nav>
-    );
+    const handleLogout = () => {
+        localStorage.removeItem("token");
+        navigate("/auth"); // Redirect to login page
     };
 
-    export default Navbar;
+    return (
+        <nav className="navbar">
+            {/* Top Section: Logo & Logout */}
+            <div className="navbar-top">
+                <Link to="/customer/home" className="navbar-logo">Tailoring Hub</Link>
+                <button className="logout-btn" onClick={handleLogout}>Logout</button>
+            </div>
+
+            {/* Center: Navigation Links */}
+            <div className="navbar-links">
+                <Link to="/customer/home" className="navbar-link">Home</Link>
+                <Link to="/customer/service" className="navbar-link">Services</Link>
+            </div>
+
+            {/* Right: Icons */}
+            <div className="navbar-icons">
+                {/* Order Details Icon */}
+                <div className="icon-container">
+                    <Link to="/customer/orders">
+                        <FaClipboardList className="icon" />
+                        {unreadOrders > 0 && <span className="badge">{unreadOrders}</span>}
+                    </Link>
+                </div>
+
+                {/* Notification Bell Icon */}
+                <div className="icon-container">
+                    <Link to="/customer/notifications">
+                        <FaBell className="icon" />
+                        {unreadNotifications > 0 && <span className="badge">{unreadNotifications}</span>}
+                    </Link>
+                </div>
+                <div className="icon-container">
+                    <Link to="/customer/profile">
+                    <FaUserCircle className="icon" />
+                    </Link>
+</div>
+            </div>
+        </nav>
+    );
+};
+
+export default Navbar;

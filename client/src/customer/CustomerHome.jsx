@@ -1,28 +1,30 @@
-    import React from "react";
-    import Navbar from "../components/Navbar";
-    import "./CustomerHome.css";
-    import ServicesPage from "./ServicesPage";
-    import AboutUsPage from "./AboutUsPage";
+import React from "react";
+import Navbar from "../components/Navbar";
+import "./CustomerHome.css";
+import ServicesPage from "./ServicesPage";
+import AboutUsPage from "./AboutUsPage";
+import Service from "../components/Service";
+import CusAboutUsPage from "../components/CusAboutUsPage";
+import Footer from "../components/Footer";
 
-    function CustomerHome() {
-    return (
-        <>
-        <Navbar />
-        <div className="hero">
-            <div className="hero-overlay" />
-            <div className="container-home">
-            <h1>Find Your Perfect Tailor</h1>
-            <p>Custom fits & expert tailoring for all your needs.</p>
-            <a href="/customer/service" className="btn">
-                Get Started
-            </a>
-            </div>
-            <div className="hero-image">
-            <img src="/images/image_home.jpg" alt="Tailor at work" />
-            </div>
-        </div>
-        </>
-    );
-    }
+function CustomerHome() {
+return (
+    <>
+    <Navbar />
+    <div className="home-container">
+<div className="overlay"></div>
+<div className="content">
+  <h1>Welcome to Tailoring Hub</h1>
+  <p>Experience the best custom tailoring services with us.</p>
+  <button className="explore-btn">Explore Now</button>
+</div>
+</div>
 
-    export default CustomerHome;
+    <Service />
+    <CusAboutUsPage/>
+    <Footer/>
+    </>
+);
+}
+
+export default CustomerHome;

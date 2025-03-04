@@ -1,73 +1,70 @@
-/* AboutUsPage.css */
-.about-us {
-    height: 90vh;
-    display: flex;
-    border-radius: 15px;
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-    align-items: center;
-    justify-content: space-between;
-    text-align: center;
-    position: relative;
-    padding: 0 5%;
-    background: linear-gradient(to right, #f8e3d2, #cba66f); 
-}
-
-.about-us h1 {
-    font-family: Verdana, Geneva, Tahoma, sans-serif;
-    font-size: 2.5rem;
-    color: #4a3f35;
-    margin-bottom: 30px;
-    /* font-weight: bold; */
-    letter-spacing: 3px;
-}
-
-.about-content {
+/* About Us Section */
+.about {
+    /* background-color: #5a3e2b; */
+    color: #f5e6ca; /* Soft Beige */
+    padding: 60px 20px;
     display: flex;
     justify-content: center;
+}
+
+/* Container */
+.about .container {
+    max-width: 1100px;
+    width: 100%;
+}
+
+/* About Content Layout */
+.about-content {
+    display: flex;
     align-items: center;
     gap: 40px;
     flex-wrap: wrap;
-    margin-top: 50px;
 }
 
+/* Text Styling */
 .about-text {
-    width: 60%;
-    font-size: 1.2rem;
-    line-height: 1.8;
-    color: #6d5c4f;
-    text-align: left;
+    max-width: 50%;
 }
 
-.about-text h2 {
+.about-text h1 {
     font-size: 2.5rem;
-    margin-bottom: 20px;
-    font-weight: 600;
-    color: #4a3f35;
+    color: #ffcc80; /* Soft Gold */
+    text-align: center;
+    font-weight: bold;
+    margin-bottom: 40px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    position: relative;
+}
+
+.about-text h1::after {
+    content: "";
+    width: 80px;
+    height: 4px;
+    background: #d7a86e; /* Muted Gold */
+    display: block;
+    margin: 10px auto 0;
+    border-radius: 2px;
 }
 
 .about-text p {
-    margin-bottom: 20px;
+    font-size: 1.1rem;
+    line-height: 1.6;
+    margin-bottom: 15px;
+    text-align: left;
+    color: #f5e6ca; /* Soft Beige */
 }
 
-.about-image {
-    width: 30%;
-    border-radius: 50%;
-    overflow: hidden;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    transform: scale(1);
-    transition: transform 0.3s ease;
-}
-
+/* Image Styling */
 .about-image img {
     width: 100%;
-    height: 100%;
-    object-fit: cover;
+    max-width: 450px;
+    margin-top: 100px;
+    border-radius: 10px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
 }
 
-.about-image:hover {
-    transform: scale(1.05);
-}
-
+/* Responsive Design */
 @media (max-width: 768px) {
     .about-content {
         flex-direction: column;
@@ -75,27 +72,10 @@
     }
 
     .about-text {
-        width: 100%;
-        animation: slideIn 1.5s ease-in-out;
+        max-width: 100%;
     }
 
-    .about-image {
-        width: 60%;
-        margin-top: 20px;
-    }
-
-    .about-us h3 {
-        font-size: 2.5rem;
+    .about-image img {
+        max-width: 100%;
     }
 }
-@keyframes slideIn {
-    from {
-        opacity: 0;
-        transform: translateX(-100%);
-    }
-    to {
-        opacity: 1;
-        transform: translateX(0);
-    }
-}
-

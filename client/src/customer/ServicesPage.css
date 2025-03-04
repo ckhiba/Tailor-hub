@@ -1,32 +1,59 @@
-/* Services Section Styling */
 .services {
-    margin-top: 50px; /* Add space from the hero section */
-    padding: 50px 20px;
-    border-radius: 15px;
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-    background: linear-gradient(to right, #f8e3d2, #cba66f); /* Match home page color theme */
+    margin-top: 50px;
+    padding: 50px 0;
 }
 
+/* Heading Styling */
 .services h1 {
     font-size: 2.5rem;
-    color: #4a3f35; /* Darker shade for title */
-    margin-bottom: 40px;
+    color: #d2a679; /* Deep Brown */
     text-align: center;
+    font-weight: bold;
+    margin-bottom: 40px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    position: relative;
 }
 
-.service-card {
-    border: none;
-    border-radius: 15px; /* Border radius for the card */
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    margin-bottom: 30px;
-    overflow: hidden;
-    transition: transform 0.3s ease;
-    background: #fff; /* White background for cards */
+/* Underline Effect */
+.services h1::after {
+    content: "";
+    width: 80px;
+    height: 4px;
+    background: #d2a679; /* Light Brown */
+    display: block;
+    margin: 10px auto 0;
+    border-radius: 2px;
+}
+
+/* Services Row */
+.row {
     display: flex;
-    flex-direction: column; /* Align content vertically */
-    justify-content: space-between; /* Spread content evenly */
-    width: 300px; /* Fixed width for uniform card size */
-    height: 400px; /* Fixed height for uniform card size */
+    justify-content: center;
+    gap: 90px;
+    flex-wrap: nowrap;
+    padding: 40px 20px;
+}
+
+/* Service Card */
+.service-card {
+    background:  #c1b3a5; /* Light Brown to Deep Brown */
+    margin-top: -20px;
+    width: 300px;
+    height: 450px;
+    border-radius: 12px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    padding-bottom: 15px;
+}
+
+.service-card:hover {
+    transform: scale(1.05);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
 }
 
 /* Card Image Styling */
@@ -34,61 +61,50 @@
     width: 100%;
     height: 200px;
     object-fit: cover;
-    border-radius: 15px 15px 0 0; /* Curve the top-left and top-right corners */
-    margin: 0; /* Ensure no margin is added around the image */
+    border-radius: 15px 15px 0 0;
 }
 
-/* Card Titles (H5) */
+/* Card Titles */
 .service-card h5 {
-    font-size: 1.75rem;
-    color: #4a3f35; /* Darker color for the titles */
-    margin-top: 20px;
+    font-size: 1.6rem;
+    color: #3e2c24; /* Soft Beige */
+    margin-top: 15px;
     text-align: center;
 }
 
 /* Card Text (Description) */
 .service-card p {
     font-size: 1rem;
-    color: #6d5c4f; /* Subtle coffee brown for description text */
-    padding: 0 20px 20px;
-    text-align: center;
-    flex-grow: 1; /* Makes sure the description takes available space */
+    color: #4b3621; /* Light Gold */
+    padding: 0 15px 15px;
+    flex-grow: 1;
 }
 
 /* Custom Button */
 .btn-custom {
-    background-color: #d8c3a5; /* Soft beige background for button */
-    color: #333; /* Dark text color */
+    background-color: #5a3e2b; /* Rich Brown */
+    color: white;
     text-decoration: none;
-    padding: 12px 24px;
+    padding: 10px 20px;
     font-size: 1rem;
     font-weight: bold;
     border-radius: 5px;
-    margin-bottom: 20px;
-    border: 2px solid #d8c3a5; /* Button border */
     transition: 0.3s;
+    border: none;
+    cursor: pointer;
     display: block;
-    text-align: center;
+    margin: 10px auto;
 }
 
 .btn-custom:hover {
-    background-color: #b09075; /* Darker beige on hover */
+    background-color: #a06a42; /* Lighter Bronze */
     color: white;
-    border-color: #b09075; /* Darker border on hover */
-}
-
-.service-card:hover {
-    transform: translateY(-10px); /* Lift the card on hover */
 }
 
 /* Responsive Design */
 @media (max-width: 768px) {
-    .service-card {
-        width: 100%; /* Make cards take full width on small screens */
-        height: auto; /* Allow height to adjust based on content */
-    }
-
-    .service-card img {
-        height: 180px; /* Adjust image size for small screens */
+    .row {
+        flex-direction: column;
+        align-items: center;
     }
 }

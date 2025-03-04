@@ -1,44 +1,116 @@
-/* Make navbar transparent */
+/* Navbar Container */
 .navbar {
-  background-color: transparent !important;
-  box-shadow: none; /* Remove shadow */
-  border: none; /* Remove any border */
-}
-
-.navbar-brand{
-  margin-left: -100px;
-}
-
-/* Ensure dropdown opens on hover */
-.navbar-nav .dropdown-menu {
-  position: absolute;
-  left: 0;
-  display: none;
-}
-
-.navbar-nav .dropdown:hover > .dropdown-menu {
-  display: block;
-}
-
-.dropdown-submenu {
-  position: relative;
-}
-
-.dropdown-submenu > .dropdown-menu {
+  /* background: #4E342E; */
+  color: #F5ECE3; /* Soft Beige */
+  display: flex;
+  position: fixed;
   top: 0;
-  left: 100%;
-  margin-top: -1px;
+  left: 0;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  padding: 10px 20px;
+  z-index: 1000;
 }
 
-/* Align navbar items from left to right */
-.navbar-collapse {
+/* Top Section: Logo & Logout */
+.navbar-top {
   display: flex;
   justify-content: space-between;
+  align-items: center;
   width: 100%;
+  padding-bottom: 10px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.2);
 }
 
-.navbar-nav {
+
+/* Logo Style */
+.navbar-logo {
+  font-size: 24px;
+  font-weight: bold;
+  color: #F5ECE3; /* Soft Beige */
+  text-decoration: none;
+}
+.navbar-logo:hover{
+  color: A67B5B;
+}
+
+/* Logout Button */
+.logout-btn {
+  padding: 8px 15px;
+  background-color: #3B2F2F; /* Deep Espresso */
+  color: white;
+  border: none;
+  cursor: pointer;
+  border-radius: 5px;
+  font-size: 14px;
+  margin-right: 60px;
+  transition: background 0.3s ease;
+}
+
+.logout-btn:hover {
+  background-color: #A67B5B; /* Golden Brown Accent */
+}
+
+/* Center Navigation Links */
+.navbar-links {
   display: flex;
-  gap: 20px; /* Adjust spacing */
+  justify-content: center;
+  gap: 30px;
+  padding-top: 10px;
 }
 
+.navbar-link {
+  color: #F5ECE3; /* Soft Beige */
+  text-decoration: none;
+  font-size: 16px;
+  transition: color 0.3s ease;
+}
+
+.navbar-link:hover {
+  color: #A67B5B; /* Golden Brown Accent */
+}
+.nav-link:active {  /* This styles the active page link */
+  color: #f4a261;  /* Change this to any color for the active link */
+  font-weight: bold;
+}
+
+/* Right-Side Icons */
+.navbar-icons {
+  display: flex;
+  align-items: center;
+  position: absolute;
+  right: 90px;
+  top: 80%;
+  transform: translateY(-50%);
+}
+
+.icon-container {
+  position: relative;
+  margin-left: 20px;
+}
+
+.icon {
+  font-size: 22px;
+  color: #F5ECE3; /* Soft Beige */
+  cursor: pointer;
+  transition: color 0.3s ease;
+}
+
+.icon:hover {
+  color: #A67B5B; /* Golden Brown Accent */
+}
+
+/* Notification & Order Badges */
+.badge {
+  position: absolute;
+  top: -5px;
+  right: -8px;
+  background-color: #8B5E3C; /* Warm Copper */
+  color: white;
+  font-size: 12px;
+  font-weight: bold;
+  border-radius: 50%;
+  padding: 4px 7px;
+}
