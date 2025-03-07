@@ -21,7 +21,7 @@ return (
 </div>
 
     <Service />
-    <CusAboutUsPage/>
+    <CusAboutUsPage />
     <Footer/>
     </>
 );

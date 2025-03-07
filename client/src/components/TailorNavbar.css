@@ -1,0 +1,74 @@
+/* TailorNavbar.css */
+.tailor-navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    padding: 1rem 2rem;
+    color: #F5ECE3;
+    /* box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); */
+    position: relative;
+}
+
+/* Logo on Top Left */
+.navbar-top-left {
+    position: absolute;
+    left: 20px;
+    top: 10px;
+}
+
+.logo {
+    font-size: 24px;
+    font-weight: bold;
+    text-decoration: none;
+    color: #F5ECE3;
+    margin-left: -170px;
+}
+
+/* Logout Button on Top Right */
+.navbar-top-right {
+    position: absolute;
+    right: 20px;
+    top: 15px;
+    margin-right: -150px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+}
+
+/* Icons Positioned Below Logout */
+.navbar-icon {
+    display: flex;
+    flex-direction: row;
+    gap: 15px;
+    position: absolute;
+    right: 70px;
+    top: 20%;
+    margin-top: 40px;
+    margin-right: -70px;
+    
+}
+
+.nav-icon {
+    font-size: 22px;
+    color: #F5ECE3;
+    transition: color 0.3s ease;
+}
+
+.nav-icon:hover {
+    color: #A67B5B;
+}
+
+.logout-button {
+    background: #3B2F2F;
+    color: white;
+    border: none;
+    padding: 8px 15px;
+    border-radius: 5px;
+    font-size: 14px;
+    cursor: pointer;
+    transition: background 0.3s ease;
+}
+
+.logout-button:hover {
+    background: #d9a856;
+}

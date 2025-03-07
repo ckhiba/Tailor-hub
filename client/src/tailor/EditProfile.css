@@ -1,0 +1,67 @@
+.edit-profile {
+    padding: 40px;
+    text-align: center;
+    color: white;
+    /* background-color: #222; */
+    min-height: 100vh;
+    min-width: 100vh;
+}
+
+.edit-form {
+    max-width: 500px;
+    margin: auto;
+    background: rgba(255, 255, 255, 0.1);
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+}
+
+.edit-form label {
+    display: block;
+    margin-top: 15px;
+    font-size: 1.2rem;
+}
+
+.edit-form input {
+    width: 100%;
+    padding: 8px;
+    margin-top: 5px;
+    border: none;
+    border-radius: 5px;
+}
+
+.preview-image {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    margin-top: 10px;
+}
+
+.work-preview {
+    display: flex;
+    gap: 10px;
+    margin-top: 10px;
+}
+
+.work-preview img {
+    width: 80px;
+    height: 80px;
+    border-radius: 5px;
+}
+
+.save-btn {
+    margin-top: 20px;
+    padding: 10px 20px;
+    background: teal;
+    border: none;
+    color: white;
+    font-size: 1rem;
+    cursor: pointer;
+    border-radius: 5px;
+    transition: 0.3s;
+}
+
+.save-btn:hover {
+    background: #0d6e6e;
+    transform: scale(1.05);
+}

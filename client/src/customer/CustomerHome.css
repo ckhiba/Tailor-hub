@@ -2,7 +2,7 @@
 .home-container {
     position: relative;
     width: 100%;
-    min-height: 85vh;
+    min-height: 88vh;
     background: url("../images/fashion-bg.jpg") no-repeat center center/cover;
     display: flex;
     align-items: center;
