@@ -17,7 +17,7 @@ const TailorSidebar = () => {
                 <li onClick={() => navigate("/tailor/upload-designs")}><FaCloudUploadAlt /> <span>Upload Designs</span></li>
             </ul>
         </aside>
-    );
+    ); 
 };
 
 export default TailorSidebar;
