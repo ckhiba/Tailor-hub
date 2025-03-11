@@ -14,7 +14,7 @@ function CusAboutUsPage() {
                 </p>
                 <p>
                 Our expert designers and tailors work with precision to bring your
-                dream attire to life. Whether it’s a wedding outfit, casual wear,
+                dream attire to life. Whether it's a  casual wear,
                 or a customized design, we ensure perfection in every stitch.
                 </p>
                 <p>Quality, passion, and creativity define us.</p>
