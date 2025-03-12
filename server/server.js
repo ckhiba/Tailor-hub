@@ -7,7 +7,6 @@ const PORT = process.env.PORT || 5005;
 
 const authRoutes = require("./routes/authRoutes");
 const userRoutes = require("./routes/userRoutes");
-// const TailorROutes = require("./routes/TailorRoutes");
 
 const app = express();
 app.use(express.json());
