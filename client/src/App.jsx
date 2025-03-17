@@ -1,6 +1,7 @@
 // import { useState } from 'react'
 // import reactLogo from './assets/react.svg'
 // import viteLogo from '/vite.svg'
+import React from 'react'
 import './App.css'
 import { Route, Routes } from 'react-router-dom'
 import AuthForm from './components/AuthForm'
@@ -9,9 +10,14 @@ import ServicesPage from './customer/ServicesPage'
 import AboutUsPage from './customer/AboutUsPage'
 import Profile from './customer/Profile'
 import OrderDetails from './customer/OrderDetails'
+
 import TailorDashboard from './tailor/TailorDashboard'
 import TailorProfile from './tailor/TailorProfile'
 import EditProfile from './tailor/EditProfile'
+import OrdersPage from './tailor/OrderPage'
+import AppointmentsPage from './tailor/AppointmentsPage'
+import TailorMessengerPage from './tailor/TailorMessengerPage'
+import TailorEarnings from './tailor/TailorEarnings'
 
 
 function App() {
@@ -29,8 +35,14 @@ function App() {
 
 
       <Route path="/tailor/home" element={<TailorDashboard />} />
+      <Route path="/tailor/orders" element={<OrdersPage />} />
       <Route path="/tailor/profile" element={<TailorProfile />} />
       <Route path="/tailor/edit-profile" element={<EditProfile />} />
+      <Route path="/tailor/appointments" element={<AppointmentsPage />} />
+      <Route path="/tailor/messages" element={<TailorMessengerPage />} />
+      <Route path="/tailor/earnings" element={<TailorEarnings />} />
+
+      <Route path="*" element={<h1>404 - Not Found</h1>} />
       </Routes>
     </>
   )

@@ -1,0 +1,147 @@
+/* TailorEarningsPage.css */
+
+.earnings-container {
+    width: 100%;
+    height: 100vh;
+    background: #1e1e1e;
+    color: white;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+.earnings-title {
+    font-size: 3rem;
+    font-weight: bold;
+    color: #c78c5b;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.earnings-summary {
+    background: rgba(255, 255, 255, 0.1);
+    padding: 30px;
+    border-radius: 12px;
+    width: 80%;
+    max-width: 700px;
+    text-align: center;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    margin-bottom: 40px;
+}
+
+.total-earnings {
+    font-size: 2.5rem;
+    font-weight: bold;
+    color: #c78c5b;
+}
+
+.transactions-container {
+    width: 90%;
+    max-width: 1200px; /* Increased table width */
+    background: rgba(255, 255, 255, 0.1);
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+.transactions-title {
+    font-size: 2rem;
+    font-weight: bold;
+    color: #c78c5b;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.transactions-table {
+    min-width: 150vh;
+    border-collapse: collapse;
+    overflow: hidden;
+    border-radius: 12px;
+}
+
+.transactions-table th, 
+.transactions-table td {
+    padding: 18px; /* Increased padding for better spacing */
+    text-align: center;
+    border-bottom: 1px solid #444;
+    font-size: 1.1rem;
+}
+
+.transactions-table th {
+    background: #c78c5b;
+    color: #1e1e1e;
+    font-size: 1.2rem;
+}
+
+.transactions-table td {
+    background: #2c2c2c;
+    color: white;
+}
+
+.transaction-success {
+    color: #4caf50;
+    font-weight: bold;
+}
+
+.transaction-pending {
+    color: #ffc107;
+    font-weight: bold;
+}
+
+@media (max-width: 768px) {
+    .earnings-summary, .transactions-container {
+        width: 95%;
+    }
+
+    .earnings-title {
+        font-size: 2.5rem;
+    }
+
+    .total-earnings {
+        font-size: 2rem;
+    }
+
+    .transactions-table th, .transactions-table td {
+        padding: 14px;
+        font-size: 1rem;
+    }
+    }
+    /* Table Header */
+    .table-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 15px;
+    }
+    
+    /* Search Bar */
+    .search-container {
+        display: flex;
+        align-items: center;
+        background: #2c2c2c;
+        padding: 8px 12px;
+        border-radius: 5px;
+    }
+    
+    .search-icon {
+        color: #c78c5b;
+        font-size: 18px;
+        margin-right: 10px;
+    }
+    
+    .search-input {
+        border: none;
+        background: transparent;
+        color: white;
+        font-size: 16px;
+        outline: none;
+        width: 200px;
+    }
+    
+    .search-input::placeholder {
+        color: #bbb;
+    }
+    

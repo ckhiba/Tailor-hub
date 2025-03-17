@@ -1,49 +1,91 @@
-    import React from "react";
-    import { useNavigate } from "react-router-dom";
-    import "./TailorProfile.css";
+import React, { useEffect, useState } from "react";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
+import "./TailorProfile.css";
 
-    const TailorProfile = () => {
+const TailorProfile = () => {
     const navigate = useNavigate();
+    const [profile, setProfile] = useState(null);
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState("");
 
-    const handleEditProfile = () => {
-        navigate("/tailor/edit-profile"); // Navigates to Edit Profile Page
-    };
+    useEffect(() => {
+        const fetchProfile = async () => {
+            const token = localStorage.getItem("token");
+            const tailorId = localStorage.getItem("tailorId");
+
+            if (!token) {
+                setError("No token found! Please login.");
+                setLoading(false);
+                return;
+            }
+
+            if (!tailorId || tailorId === "null") {
+                setError("No tailor ID found! Please login.");
+                setLoading(false);
+                return;
+            }
+
+            try {
+                const res = await axios.get(`http://localhost:5000/api/tailor/profile/${tailorId}`, {
+                    headers: { Authorization: `Bearer ${token}` }
+                });
+                setProfile(res.data || {});
+            } catch (err) {
+                setError(err.response?.data?.message || "Failed to fetch profile.");
+            } finally {
+                setLoading(false);
+            }
+        };
+
+        fetchProfile();
+    }, []);
+
+    if (loading) return <h2 className="loading">Loading...</h2>;
+    if (error) return <h2 className="error">{error}</h2>;
 
     return (
-        <div className="tailor-profile">
-        <div className="profile-container">
-            <div className="profile-image">
-            <img src="https://via.placeholder.com/150" alt="Tailor Profile" />
+        <div className="tailor-profile-container">
+            <h2 className="profile-title">Tailor Profile</h2>
+            <div className="profile-header">
+                <img 
+                    src={profile?.profileImage || "https://via.placeholder.com/150"} 
+                    alt="Profile" 
+                    className="profile-picture" 
+                />
+                <div className="tailor-info">
+                    <h3>{profile?.name || "N/A"}</h3>
+                    <p><strong>Email:</strong> {profile?.email || "N/A"}</p>
+                    <p><strong>Phone:</strong> {profile?.phone || "N/A"}</p>
+                    <p><strong>Place:</strong> {profile?.place || "Not provided"}</p>
+                    <p><strong>Categories:</strong> {profile?.categories?.length ? profile.categories.join(", ") : "None"}</p>
+                </div>
             </div>
-            <div className="profile-details">
-            <h2>John Doe</h2>
-            <p><strong>Email:</strong> johndoe@example.com</p>
-            <p><strong>Phone:</strong> +1234567890</p>
-            <p><strong>Place:</strong> New York, USA</p>
+            <div className="button-group">
+                <button className="edit-profile-btn" onClick={() => navigate("/tailor/edit-profile")}>Edit Profile</button>
+            </div>
 
-            <div className="profile-categories">
-                <h3>Specialized In</h3>
-                <ul>
-                <li>Alteration</li>
-                <li>Customization</li>
-                <li>Embroidery</li>
-                </ul>
+            <div className="work-samples">
+                <h3 className="section-title">Work Samples</h3>
+                <div className="gallery">
+                    {profile?.workSamples?.length > 0 ? (
+                        profile.workSamples.map((sample, index) => (
+                            <div key={index} className="work-sample">
+                                <img 
+                                    src={sample} 
+                                    alt={`Work Sample ${index + 1}`} 
+                                    className="work-image" 
+                                />
+                            </div>
+                        ))
+                    ) : (
+                        <p>No work samples uploaded.</p>
+                    )}
+                </div>
             </div>
 
-            <button className="edit-profile-btn" onClick={handleEditProfile}>Edit Profile</button>
-            </div>
-        </div>
-
-        <div className="work-samples">
-            <h3>Work Samples</h3>
-            <div className="work-gallery">
-            <img src="https://via.placeholder.com/200" alt="Work Sample 1" />
-            <img src="https://via.placeholder.com/200" alt="Work Sample 2" />
-            <img src="https://via.placeholder.com/200" alt="Work Sample 3" />
-            </div>
-        </div>
         </div>
     );
-    };
+};
 
-    export default TailorProfile;
+export default TailorProfile;

@@ -1,78 +1,121 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import Select from "react-select";
 import "./EditProfile.css";
 
 const EditProfile = () => {
-const navigate = useNavigate();
+    const [profile, setProfile] = useState({
+        name: "",
+        phone: "",
+        email: "",
+        place: "",
+        profilePicture: "",
+        categories: [],
+        workSamples: []
+    });
 
-const [profile, setProfile] = useState({
-    name: "John Doe",
-    email: "johndoe@example.com",
-    phone: "+1234567890",
-    place: "New York, USA",
-    profileImage: "https://via.placeholder.com/150",
-    categories: ["Alteration", "Customization", "Embroidery"],
-    workSamples: [],
-});
+    const navigate = useNavigate();
 
-const handleInputChange = (e) => {
-    setProfile({ ...profile, [e.target.name]: e.target.value });
-};
+    useEffect(() => {
+        const fetchProfile = async () => {
+            try {
+                const token = localStorage.getItem("token");
+                const res = await axios.get("/api/tailor/profile", {
+                    headers: { Authorization: `Bearer ${token}` }
+                });
+                setProfile(res.data);
+            } catch (error) {
+                console.error("Error fetching profile:", error);
+            }
+        };
+        fetchProfile();
+    }, []);
 
-const handleImageUpload = (e) => {
-    const file = e.target.files[0];
-    if (file) {
-    const imageUrl = URL.createObjectURL(file);
-    setProfile({ ...profile, profileImage: imageUrl });
-    }
-};
+    const categoriesList = [
+        { value: "Stitching", label: "Stitching" },
+        { value: "Customization", label: "Customization" },
+        { value: "Alterations", label: "Alterations" },
+        { value: "Uniform Stitching", label: "Uniform Stitching" }
+    ];
 
-const handleWorkSampleUpload = (e) => {
-    const files = Array.from(e.target.files);
-    const images = files.map((file) => URL.createObjectURL(file));
-    setProfile({ ...profile, workSamples: [...profile.workSamples, ...images] });
-};
+    const handleChange = (e) => {
+        const { name, value } = e.target;
+        setProfile((prev) => ({ ...prev, [name]: value }));
+    };
 
-const handleSave = () => {
-    console.log("Profile Updated:", profile);
-    navigate("/profile"); // Navigate back to profile page
-};
+    const handleFileChange = (e) => {
+        const file = e.target.files[0];
+        if (file) {
+            setProfile({ ...profile, profilePicture: URL.createObjectURL(file) });
+        }
+    };
 
-return (
-    <div className="edit-profile">
-    <h2>Edit Profile</h2>
-    <div className="edit-form">
-        <label>Profile Image:</label>
-        <input type="file" onChange={handleImageUpload} />
-        <img src={profile.profileImage} alt="Profile" className="preview-image" />
+    const handleCategoryChange = (selectedOptions) => {
+        setProfile({ ...profile, categories: selectedOptions });
+    };
 
-        <label>Name:</label>
-        <input type="text" name="name" value={profile.name} onChange={handleInputChange} />
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        try {
+            const token = localStorage.getItem("token");
+            await axios.put("/api/tailor/profile", profile, {
+                headers: { Authorization: `Bearer ${token}` }
+            });
+            alert("Profile updated successfully!");
+            navigate("/tailor/profile");
+        } catch (error) {
+            console.error("Error updating profile:", error);
+        }
+    };
 
-        <label>Email:</label>
-        <input type="email" name="email" value={profile.email} onChange={handleInputChange} />
-
-        <label>Phone:</label>
-        <input type="text" name="phone" value={profile.phone} onChange={handleInputChange} />
-
-        <label>Place:</label>
-        <input type="text" name="place" value={profile.place} onChange={handleInputChange} />
-
-        <label>Specialized Categories:</label>
-        <input type="text" name="categories" value={profile.categories.join(", ")} onChange={(e) => setProfile({ ...profile, categories: e.target.value.split(", ") })} />
-
-        <label>Upload Work Samples:</label>
-        <input type="file" multiple onChange={handleWorkSampleUpload} />
-        <div className="work-preview">
-        {profile.workSamples.map((sample, index) => (
-            <img key={index} src={sample} alt={`Work Sample ${index + 1}`} />
-        ))}
+    return (
+        <div className="edit-profile-container">
+            <h2>Edit Your Profile</h2>
+            <form onSubmit={handleSubmit}>
+                <div className="profile-picture-section">
+                    <img
+                        src={profile.profilePicture || "default-avatar.png"}
+                        alt="Profile"
+                        className="profile-picture"
+                    />
+                    <input type="file" accept="image/*" onChange={handleFileChange} />
+                </div>
+                <div className="form-group">
+                    <label>Name:</label>
+                    <input type="text" name="name" value={profile.name} onChange={handleChange} required />
+                </div>
+                <div className="form-group">
+                    <label>Phone:</label>
+                    <input type="text" name="phone" value={profile.phone} onChange={handleChange} required />
+                </div>
+                <div className="form-group">
+                    <label>Email:</label>
+                    <input type="email" name="email" value={profile.email} disabled />
+                </div>
+                <div className="form-group">
+                    <label>Place:</label>
+                    <input type="text" name="place" value={profile.place} onChange={handleChange} required />
+                </div>
+                <div className="form-group">
+                    <label>Specialized Categories:</label>
+                    <Select
+                        isMulti
+                        options={categoriesList}
+                        value={profile.categories}
+                        onChange={handleCategoryChange}
+                        classNamePrefix="react-select"
+                    />
+                </div>
+                <div className="button-group">
+                    <button type="submit" className="save-btn">Save</button>
+                    <button type="button" className="cancel-btn" onClick={() => navigate("/tailor/profile")}>
+                        Cancel
+                    </button>
+                </div>
+            </form>
         </div>
-
-        <button className="save-btn" onClick={handleSave}>Save Profile</button>
-    </div>
-    </div>
-);
+    );
 };
 
 export default EditProfile;

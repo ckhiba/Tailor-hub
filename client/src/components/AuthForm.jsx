@@ -11,14 +11,13 @@ const AuthForm = () => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [message, setMessage] = useState("");
-    const [messageColor, setMessageColor] = useState("red"); // Message color (red for errors, green for success)
-    const [phoneError, setPhoneError] = useState(""); // Phone number error message
+    const [messageColor, setMessageColor] = useState("red");
+    const [phoneError, setPhoneError] = useState("");
     const navigate = useNavigate();
 
     const handleSubmit = async (e) => {
         e.preventDefault();
 
-        // Prevent submission if phone number is invalid
         if (phone.length !== 10) {
             setPhoneError("Phone number must be exactly 10 digits");
             return;
@@ -26,20 +25,26 @@ const AuthForm = () => {
 
         try {
             if (isLogin) {
-                // LOGIN Request
                 const res = await axios.post("http://localhost:5000/api/auth/login", { phone, password });
+
                 localStorage.setItem("token", res.data.token);
+                localStorage.setItem("user", JSON.stringify(res.data.user)); // Store user details
+
+                if (res.data.user.role === "tailor") {
+                    console.log(" Storing Tailor ID:", res.data.user._id); // Debugging log
+                    localStorage.setItem("tailorId", res.data.user._id); // Fix here!
+                } else {
+                    localStorage.removeItem("tailorId");
+                }
                 
+
+
                 setMessage("Login successful!");
                 setMessageColor("green");
 
                 // Redirect Based on Role
                 setTimeout(() => {
-                    if (res.data.role === "customer") {
-                        navigate("/customer/home");
-                    } else {
-                        navigate("/tailor/home");
-                    }
+                    navigate(res.data.user.role === "tailor" ? "/tailor/home" : "/customer/home");
                 }, 1000);
             } else {
                 // SIGNUP Request
@@ -53,7 +58,7 @@ const AuthForm = () => {
                 // Reset fields and switch to login mode
                 setTimeout(() => {
                     setIsLogin(true);
-                    setMessage(""); // Clear message
+                    setMessage("");
                     setName("");
                     setPhone("");
                     setEmail("");
@@ -69,16 +74,10 @@ const AuthForm = () => {
     const handlePhoneChange = (e) => {
         const input = e.target.value;
 
-        // Allow only numeric input
         if (!/^\d*$/.test(input)) return;
 
         setPhone(input);
-
-        if (input.length !== 10) {
-            setPhoneError("Phone number must be exactly 10 digits");
-        } else {
-            setPhoneError("");
-        }
+        setPhoneError(input.length !== 10 ? "Phone number must be exactly 10 digits" : "");
     };
 
     const toggleForm = () => {
@@ -112,11 +111,24 @@ const AuthForm = () => {
                         value={phone} 
                         onChange={handlePhoneChange} 
                         required 
+                        autoComplete="off" 
+                        name="phone"
+                        defaultValue="" 
+                        key="phone-input"
                     />
                     {phoneError && <p style={{ color: "red" }}>* {phoneError}</p>}
 
-                    <input type="password" placeholder="Password" value={password} onChange={(e) => setPassword(e.target.value)} required />
-
+                    <input 
+                        type="password" 
+                        placeholder="Password" 
+                        value={password} 
+                        onChange={(e) => setPassword(e.target.value)} 
+                        required 
+                        autoComplete="new-password" 
+                        name="password"
+                        defaultValue="" 
+                        key="password-input"
+                        />
                     {!isLogin && (
                         <div className="role-selection">
                             <label>Role:</label>

@@ -15,27 +15,22 @@ const TailorDashboard = () => {
         <div className="dashboard-content">
           <h1 className="dashboard-title">Tailor Dashboard</h1>
           <div className="dashboard-widgets">
-            <div className="widget orders" onClick={() => navigate("/orders")}>
+            <div className="widget orders" onClick={() => navigate("/tailor/orders")}>
               <FaShoppingCart className="widget-icon" />
               <h2>Orders</h2>
               <p>View and manage customer orders.</p>
             </div>
-            <div className="widget appointments" onClick={() => navigate("/appointments")}>
+            <div className="widget appointments" onClick={() => navigate("/tailor/appointments")}>
               <FaCalendarCheck className="widget-icon" />
               <h2>Appointments</h2>
               <p>Schedule and manage appointments.</p>
             </div>
-            <div className="widget notifications" onClick={() => navigate("/notifications")}>
-              <FaBell className="widget-icon" />
-              <h2>Notifications</h2>
-              <p>Stay updated with the latest alerts.</p>
-            </div>
-            <div className="widget messages" onClick={() => navigate("/messages")}>
+            <div className="widget messages" onClick={() => navigate("/tailor/messages")}>
               <FaEnvelope className="widget-icon" />
               <h2>Messages</h2>
               <p>Communicate with customers.</p>
             </div>
-            <div className="widget earnings" onClick={() => navigate("/earnings")}>
+            <div className="widget earnings" onClick={() => navigate("/tailor/earnings")}>
               <FaMoneyBillWave className="widget-icon" />
               <h2>Earnings</h2>
               <p>Track your income and payments.</p>
