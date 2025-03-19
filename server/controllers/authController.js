@@ -57,7 +57,7 @@ exports.login = async (req, res) => {
     try {
         const { phone, password } = req.body;
 
-        console.log("Login Attempt:", { phone, password });
+        console.log("Login Attempt");
 
         //  Check if user exists
         const user = await User.findOne({ phone });
@@ -80,9 +80,10 @@ exports.login = async (req, res) => {
 
             if (tailor) {
                 tailorId = tailor._id;
-                console.log("Fetched Tailor ID:", tailorId);
+                // console.log("Fetched Tailor ID:", tailorId);
             } else {
-                console.log("Tailor profile not found for ID:", user._id);
+                console.log("Tailor profile not found");
+                // console.log("Tailor profile not found for ID:", user._id);
             }
         }
 
@@ -93,7 +94,7 @@ exports.login = async (req, res) => {
             { expiresIn: "1d" }
         );
 
-        console.log("Login Successful:", { userId: user._id, role: user.role, tailorId });
+        // console.log("Login Successful:", { userId: user._id, role: user.role, tailorId });
 
         //  Return token and user data
         res.json({ token, user, tailorId });

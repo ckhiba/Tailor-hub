@@ -27,11 +27,11 @@ const uploadWorkSample = multer({ storage }).single("workSample");
 const getTailorProfile = async (req, res) => {
     try {
         const tailorId = req.params.id;
-        console.log("Fetching Tailor ID:", tailorId);
+        // console.log("Fetching Tailor ID:", tailorId);
 
         const tailor = await Tailor.findById(tailorId);
         if (!tailor) {
-            console.log("Tailor not found for ID:", tailorId);
+            // console.log("Tailor not found for ID:", tailorId);
             return res.status(404).json({ message: "Tailor not found" });
         }
         res.json(tailor);
