@@ -24,7 +24,7 @@ const TailorNavbar = () => {
                 <div className="navbar-icon">
                     <Link to="/orders" className="nav-icon"><FaClipboardList /></Link>
                     <Link to="/notifications" className="nav-icon"><FaBell /></Link>
-                    <Link to="/profile" className="nav-icon"><FaUserCircle /></Link>
+                    <Link to="/tailor/view-profile" className="nav-icon"><FaUserCircle /></Link>
                 </div>
             </div>
         </nav>

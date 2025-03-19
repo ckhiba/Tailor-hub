@@ -13,11 +13,12 @@ import OrderDetails from './customer/OrderDetails'
 
 import TailorDashboard from './tailor/TailorDashboard'
 import TailorProfile from './tailor/TailorProfile'
-import EditProfile from './tailor/EditProfile'
 import OrdersPage from './tailor/OrderPage'
 import AppointmentsPage from './tailor/AppointmentsPage'
 import TailorMessengerPage from './tailor/TailorMessengerPage'
 import TailorEarnings from './tailor/TailorEarnings'
+import ViewProfile from './tailor/ViewProfile'
+import EditProfile from './tailor/EditProfile'
 
 
 function App() {
@@ -37,7 +38,10 @@ function App() {
       <Route path="/tailor/home" element={<TailorDashboard />} />
       <Route path="/tailor/orders" element={<OrdersPage />} />
       <Route path="/tailor/profile" element={<TailorProfile />} />
+      <Route path="/tailor/view-profile" element={<ViewProfile />} />
       <Route path="/tailor/edit-profile" element={<EditProfile />} />
+
+
       <Route path="/tailor/appointments" element={<AppointmentsPage />} />
       <Route path="/tailor/messages" element={<TailorMessengerPage />} />
       <Route path="/tailor/earnings" element={<TailorEarnings />} />
