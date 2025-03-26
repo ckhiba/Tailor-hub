@@ -1,0 +1,31 @@
+.service-selection-container {
+    margin-top: 20px;
+    text-align: center;
+    color: white;
+}
+
+.service-list {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin-top: 15px;
+}
+
+.service-btn {
+    padding: 10px 20px;
+    background-color: #c78c5b;
+    border: none;
+    color: white;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: 0.3s ease;
+}
+
+.service-btn:hover {
+    background-color: #a36a3c;
+    transform: scale(1.05);
+}
+
+.service-btn.active {
+    background-color: teal;
+}

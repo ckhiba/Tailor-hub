@@ -1,0 +1,65 @@
+.edit-profile-container {
+    max-width: 600px;
+    margin: 40px auto;
+    padding: 20px;
+    background: #1e1e1e;
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+    color: #fff;
+}
+
+/* Form Group */
+.form-group {
+    margin-bottom: 15px;
+}
+
+/* Label */
+label {
+    display: block;
+    font-size: 1rem;
+    color: #ebc59f;
+    margin-bottom: 5px;
+}
+
+/* Input Field */
+input {
+    width: 100%;
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid #c78c5b;
+    background: #2b2b2b;
+    color: #fff;
+    font-size: 1rem;
+    outline: none;
+    transition: border 0.3s ease;
+}
+
+input:focus {
+    border-color: #ebc59f;
+}
+
+/* Save Button */
+.save-btn {
+    padding: 10px 20px;
+    background-color: #c78c5b;
+    border: none;
+    color: #fff;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: 0.3s ease-in-out;
+    font-size: 1rem;
+    width: 100%;
+}
+
+.save-btn:hover {
+    background-color: #a36a3c;
+    transform: scale(1.05);
+}
+
+/* Loading & Error Styles */
+.loading,
+.error {
+    font-size: 1.1rem;
+    margin-top: 20px;
+    color: #f5a623; 
+}

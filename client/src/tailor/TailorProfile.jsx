@@ -9,12 +9,13 @@ const TailorProfile = () => {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState("");
     const [file, setFile] = useState(null);
+    const [selectedSample, setSelectedSample] = useState(null);
 
+    // Fetch Tailor Profile
     useEffect(() => {
         const fetchProfile = async () => {
             const token = localStorage.getItem("token");
             const tailorId = localStorage.getItem("tailorId");
-            console.log("Fetched Tailor ID:", tailorId); // Debug log
 
             if (!token || !tailorId) {
                 setError("No token or tailor ID found. Please login.");
@@ -29,7 +30,6 @@ const TailorProfile = () => {
                         headers: { Authorization: `Bearer ${token}` },
                     }
                 );
-
                 setProfile(res.data);
                 setLoading(false);
             } catch (error) {
@@ -41,7 +41,7 @@ const TailorProfile = () => {
         fetchProfile();
     }, []);
 
-    //  Upload Work Samples
+    //Upload Work Samples
     const uploadWorkSample = async (e) => {
         e.preventDefault();
         if (!file) {
@@ -57,7 +57,7 @@ const TailorProfile = () => {
 
         try {
             const res = await axios.post(
-                `http://localhost:5000/api/tailor/upload/${tailorId}`,
+                `http://localhost:5000/api/tailor/upload-work/${tailorId}`,
                 formData,
                 {
                     headers: {
@@ -68,11 +68,41 @@ const TailorProfile = () => {
             );
 
             alert("Work sample uploaded successfully!");
-            setProfile(res.data); // Update profile with new work samples
-            setFile(null); // Clear file input
+            setProfile(res.data);
+            setFile(null);
         } catch (error) {
             alert("Error uploading work sample.");
         }
+    };
+
+    // Delete Work Sample
+    const deleteWorkSample = async (filename) => {
+        const token = localStorage.getItem("token");
+        const tailorId = localStorage.getItem("tailorId");
+
+        try {
+            const res = await axios.delete(
+                `http://localhost:5000/api/tailor/remove-work/${tailorId}/${filename}`,
+                {
+                    headers: { Authorization: `Bearer ${token}` },
+                }
+            );
+
+            alert("Work sample removed successfully!");
+            setProfile(res.data.tailor);
+        } catch (error) {
+            alert("Error removing work sample.");
+        }
+    };
+
+    // Open Modal with Selected Sample
+    const viewSampleDetails = (sample) => {
+        setSelectedSample(sample);
+    };
+
+    //  Close Modal
+    const closeModal = () => {
+        setSelectedSample(null);
     };
 
     if (loading) {
@@ -88,15 +118,29 @@ const TailorProfile = () => {
             {/* Profile Header */}
             <div className="profile-header">
                 <img
-                    src={profile.profilePic || "/images/default-profile.jpg"}
+                    src={
+                        profile.profilePic
+                            ? `http://localhost:5000/uploads/${profile.profilePic.split("/").pop()}`
+                            : "/images/default-profile.jpg"
+                    }
                     alt="Tailor"
                     className="profile-picture"
                 />
                 <h2 className="tailor-name">{profile.name}</h2>
                 <p className="tailor-contact">📞 {profile.phone}</p>
                 <p className="tailor-contact">✉️ {profile.email}</p>
-                <p className="tailor-experience">
-                    ✂️ Experience: {profile.experience}years
+                <p className="tailor-experience">✂️ Experience: {profile.experience} years</p>
+
+                {/*  Location and Services */}
+                <p className="tailor-location">
+                    📍 Location: {profile.location || "Location not specified"}
+                </p>
+
+                <p className="tailor-services">
+                    🎽 Tailoring For:{" "}
+                    <span>
+                        {profile.services?.join(", ") || "No tailoring options selected"}
+                    </span>
                 </p>
 
                 {/* Categories Display */}
@@ -131,24 +175,50 @@ const TailorProfile = () => {
                 </form>
             </div>
 
-            {/* Work Samples Section */}
-            <div className="work-samples-section">
-                <h3>✨ Tailor's Work Samples</h3>
-                {profile.workSamples && profile.workSamples.length > 0 ? (
-                    <div className="work-samples-gallery">
-                        {profile.workSamples.map((sample, index) => (
-                            <img
-                                key={index}
-                                src={`http://localhost:5000${sample}`}
-                                alt={`Sample ${index + 1}`}
-                                className="work-sample"
-                            />
-                        ))}
+            {/* Show Work Samples */}
+            {profile.workSamples && profile.workSamples.length > 0 ? (
+                <div className="work-samples-gallery">
+                    {profile.workSamples.map((sample, index) => {
+                        const filename = sample.split("/").pop(); // Extract file name
+
+                        return (
+                            <div key={index} className="work-sample-item">
+                                <img
+                                    src={`http://localhost:5000/uploads/${filename}`}
+                                    alt={`Sample ${index + 1}`}
+                                    className="work-sample"
+                                    onClick={() => viewSampleDetails(sample)} //  Open modal on click
+                                />
+                                <button
+                                    className="remove-btn"
+                                    onClick={() => deleteWorkSample(filename)}
+                                >
+                                    ❌
+                                </button>
+                            </div>
+                        );
+                    })}
+                </div>
+            ) : (
+                <p className="no-samples">No work samples uploaded.</p>
+            )}
+
+            {/* Modal to Show Image Details */}
+            {selectedSample && (
+                <div className="modal-overlay">
+                    <div className="modal-content">
+                        <span className="close-btn" onClick={closeModal}>
+                            ❌
+                        </span>
+                        <h3>Sample Details</h3>
+                        <img
+                            src={`http://localhost:5000/uploads/${selectedSample.split("/").pop()}`}
+                            alt="Selected Work Sample"
+                            className="modal-image"
+                        />
                     </div>
-                ) : (
-                    <p className="no-samples">No work samples uploaded.</p>
-                )}
-            </div>
+                </div>
+            )}
 
             {/* Button Group */}
             <div className="button-group">

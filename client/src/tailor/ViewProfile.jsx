@@ -7,9 +7,9 @@ const ViewProfile = () => {
     const navigate = useNavigate();
     const location = useLocation();
 
-    //  Get updated profile if passed from EditProfile.jsx, otherwise null
+    // Get updated profile if passed from EditProfile.jsx, otherwise null
     const [profile, setProfile] = useState(location.state?.updatedProfile || null);
-    const [loading, setLoading] = useState(!profile); //  Only load if no updated profile
+    const [loading, setLoading] = useState(!profile); // Only load if no updated profile
     const [error, setError] = useState("");
 
     useEffect(() => {
@@ -58,10 +58,15 @@ const ViewProfile = () => {
         <div className="view-profile-container">
             <div className="profile-header">
                 <img
-                    src={profile.profilePic || "/images/default-profile.jpg"}
+                    src={
+                        profile.profilePic
+                            ? `http://localhost:5000${profile.profilePic}` // Correct path
+                            : "/images/default-profile.jpg"
+                    }
                     alt="Tailor"
                     className="profile-picture"
                 />
+
                 <h2 className="tailor-name">{profile.name}</h2>
                 <p className="tailor-contact">📞 {profile.phone}</p>
                 <p className="tailor-contact">✉️ {profile.email}</p>
@@ -69,10 +74,21 @@ const ViewProfile = () => {
                     ✂️ Experience: {profile.experience || "No experience provided"} years
                 </p>
 
+                <p className="tailor-location">
+                    📍 Location: {profile.location || "Location not specified"}
+                </p>
+
                 <p className="tailor-categories">
                     🧵 Services:{" "}
                     <span>
                         {profile.categories?.join(", ") || "No services selected"}
+                    </span>
+                </p>
+
+                <p className="tailor-services">
+                    🎽 Tailoring For:{" "}
+                    <span>
+                        {profile.services?.join(", ") || "No tailoring options selected"}
                     </span>
                 </p>
             </div>

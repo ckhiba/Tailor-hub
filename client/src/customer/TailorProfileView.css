@@ -1,0 +1,232 @@
+/* Full Page Layout */
+.profile__container {
+    width: 150vh;
+    height: 100vh;
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+/* Profile Header */
+.profile__header {
+    display: flex;
+    gap: 20px;
+    align-items: center;
+    padding: 20px;
+    background: #2a2a2a;
+    border-radius: 12px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.6);
+}
+
+/* Profile Image Wrapper */
+.profile__image-wrapper {
+    text-align: center;
+}
+
+.profile__image {
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
+    border: 4px solid #5c8e8a;
+    object-fit: cover;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.8);
+}
+
+/* Profile Info Section */
+.profile__info {
+    flex: 1;
+}
+
+.profile__name {
+    font-size: 2.4rem;
+    color: #ebc59f;
+    margin-bottom: 10px;
+}
+
+/* Profile Details */
+.profile__details {
+    font-size: 1rem;
+    line-height: 1.8;
+    color: #ccc;
+}
+
+.profile__detail-item {
+    margin-bottom: 8px;
+}
+
+/* Tags Section */
+.profile__tags {
+    margin-top: 20px;
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.profile__tag {
+    padding: 8px 15px;
+    border-radius: 5px;
+    background-color: #333;
+    color: white;
+    font-size: 0.9rem;
+    border: 1px solid #5c8e8a;
+}
+
+/* Work Samples Section */
+.profile__samples {
+    margin-top: 20px;
+    display: flex;
+    gap: 15px;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+}
+
+.profile__sample {
+    width: 120px;
+    height: 120px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: transform 0.3s ease-in-out;
+    border: 2px solid #c78c5b;
+    object-fit: cover;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.6);
+}
+
+.profile__sample:hover {
+    transform: scale(1.1);
+}
+
+/* Modal Styles */
+.profile__modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.8);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.profile__modal-content {
+    background: #222;
+    padding: 20px;
+    border-radius: 10px;
+    text-align: center;
+    position: relative;
+    max-width: 600px;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.9);
+}
+
+.profile__modal-image {
+    max-width: 100%;
+    max-height: 80vh;
+    border-radius: 10px;
+    border: 3px solid #c78c5b;
+}
+
+.profile__modal-close {
+    position: absolute;
+    top: 10px;
+    right: 15px;
+    font-size: 24px;
+    color: #fff;
+    cursor: pointer;
+}
+
+/* Appointment Section */
+.profile__appointment {
+    margin-top: 30px;
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    padding: 15px;
+}
+
+/* Date Picker - Standard Style */
+.profile__appointment-date {
+    padding: 8px 12px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    background: #fff;
+    color: #333;
+    font-size: 1rem;
+}
+
+/* Appointment Button - Standard Style */
+.profile__appointment-btn {
+    padding: 10px 20px;
+    background: #5c8e8a;
+    border: 1px solid #5c8e8a;
+    color: white;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: 0.3s ease;
+    font-size: 1rem;
+}
+
+.profile__appointment-btn:hover {
+    background: #4b7c78;
+    border: 1px solid #4b7c78;
+}
+
+/* Success Message */
+.profile__success-message {
+    margin-top: 10px;
+    color: #4caf50;
+    font-size: 1rem;
+}
+
+/* Error & Loading Messages */
+.profile__error,
+.profile__loading {
+    color: #f5a623;
+    font-size: 1.2rem;
+    margin-top: 20px;
+}
+
+/* Responsive Design */
+@media (max-width: 1024px) {
+    .profile__header {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .profile__image {
+        width: 140px;
+        height: 140px;
+    }
+
+    .profile__samples {
+        justify-content: center;
+    }
+
+    .profile__modal-content {
+        width: 95%;
+    }
+}
+
+/* Mobile Optimization */
+@media (max-width: 768px) {
+    .profile__container {
+        padding: 15px;
+    }
+
+    .profile__name {
+        font-size: 1.8rem;
+    }
+
+    .profile__image {
+        width: 120px;
+        height: 120px;
+    }
+
+    .profile__sample {
+        width: 90px;
+        height: 90px;
+    }
+
+    .profile__appointment-btn {
+        width: 100%;
+    }
+}

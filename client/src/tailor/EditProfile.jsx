@@ -1,14 +1,22 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
-import Select from "react-select"; // ✅ For multi-select
+import Select from "react-select";
 import "./EditProfile.css";
 
+// Options for categories and services
 const categoryOptions = [
     { value: "Alteration", label: "Alteration" },
     { value: "Stitching", label: "Stitching" },
     { value: "Uniform Stitching", label: "Uniform Stitching" },
     { value: "Customization", label: "Customization" },
+];
+
+const serviceOptions = [
+    { value: "Gents", label: "Gents" },
+    { value: "Women", label: "Women" },
+    { value: "Girls", label: "Girls" },
+    { value: "Boys", label: "Boys" },
 ];
 
 const EditProfile = () => {
@@ -17,11 +25,13 @@ const EditProfile = () => {
         name: "",
         phone: "",
         email: "",
+        location: "", // ✅ New field for location
         experience: 0,
         categories: [],
-        profilePic: "", //  New field for profilePic
+        services: [], // ✅ New field for services
+        profilePic: "",
     });
-    const [selectedFile, setSelectedFile] = useState(null); //  For storing the uploaded file
+    const [selectedFile, setSelectedFile] = useState(null);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState("");
 
@@ -51,13 +61,13 @@ const EditProfile = () => {
         fetchProfile();
     }, []);
 
-    //  Handle text inputs
+    // Handle text inputs
     const handleChange = (e) => {
         const { name, value } = e.target;
         setProfile({ ...profile, [name]: value });
     };
 
-    //  Handle category selection
+    // Handle category selection
     const handleCategoryChange = (selectedOptions) => {
         const selectedCategories = selectedOptions
             ? selectedOptions.map((option) => option.value)
@@ -65,12 +75,20 @@ const EditProfile = () => {
         setProfile({ ...profile, categories: selectedCategories });
     };
 
-    //  Handle file input change
-    const handleFileChange = (e) => {
-        setSelectedFile(e.target.files[0]); //  Store the selected file
+    // Handle service selection
+    const handleServiceChange = (selectedOptions) => {
+        const selectedServices = selectedOptions
+            ? selectedOptions.map((option) => option.value)
+            : [];
+        setProfile({ ...profile, services: selectedServices });
     };
 
-    //  Handle form submission
+    // Handle file input change
+    const handleFileChange = (e) => {
+        setSelectedFile(e.target.files[0]);
+    };
+
+    // Handle form submission
     const handleSubmit = async (e) => {
         e.preventDefault();
         setLoading(true);
@@ -79,20 +97,20 @@ const EditProfile = () => {
             const token = localStorage.getItem("token");
             const tailorId = localStorage.getItem("tailorId");
 
-            //  Create FormData to send profile + image
+            // Create FormData to send profile + image
             const formData = new FormData();
             formData.append("name", profile.name);
             formData.append("phone", profile.phone);
             formData.append("email", profile.email);
+            formData.append("location", profile.location); // ✅ Add location
             formData.append("experience", profile.experience);
             formData.append("categories", JSON.stringify(profile.categories));
+            formData.append("services", JSON.stringify(profile.services)); // ✅ Add services
 
-            //  Only append file if selected
             if (selectedFile) {
                 formData.append("profilePic", selectedFile);
             }
 
-            //  Send FormData via PUT request
             const res = await axios.put(
                 `http://localhost:5000/api/tailor/update-profile`,
                 formData,
@@ -105,8 +123,6 @@ const EditProfile = () => {
             );
 
             alert("Profile updated successfully!");
-
-            //  Pass updated profile directly
             navigate("/tailor/view-profile", { state: { updatedProfile: res.data.tailor } });
         } catch (error) {
             setError("Error updating profile.");
@@ -150,6 +166,16 @@ const EditProfile = () => {
                     />
                 </div>
                 <div className="form-group">
+                    <label>Location:</label> {/* ✅ New Location Field */}
+                    <input
+                        type="text"
+                        name="location"
+                        value={profile.location}
+                        onChange={handleChange}
+                        required
+                    />
+                </div>
+                <div className="form-group">
                     <label>Experience (in years):</label>
                     <input
                         type="number"
@@ -171,7 +197,18 @@ const EditProfile = () => {
                         classNamePrefix="react-select"
                     />
                 </div>
-                {/*  New Field to Upload Profile Pic */}
+                <div className="form-group">
+                    <label>Services Offered:</label> {/* ✅ New Services Field */}
+                    <Select
+                        isMulti
+                        options={serviceOptions}
+                        value={serviceOptions.filter((option) =>
+                            profile.services.includes(option.value)
+                        )}
+                        onChange={handleServiceChange}
+                        classNamePrefix="react-select"
+                    />
+                </div>
                 <div className="form-group">
                     <label>Upload Profile Picture:</label>
                     <input type="file" accept="image/*" onChange={handleFileChange} />

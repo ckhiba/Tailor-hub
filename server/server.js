@@ -2,10 +2,20 @@ const express = require("express");
 const mongoose = require("mongoose");
 const cors = require("cors");
 require("dotenv").config();
+const path = require("path"); //  Import path
+
 
 const authRoutes = require("./routes/authRoutes");
 const userRoutes = require("./routes/userRoutes");
 const tailorRoutes = require("./routes/tailorRoutes");
+const customerRoutes = require("./routes/customerRoutes");
+
+
+
+const appointmentRoutes = require("./routes/appointmentRoutes");
+const notificationRoutes = require("./routes/notificationRoutes");
+const orderRoutes = require("./routes/orderRoutes");
+
 
 
 
@@ -39,9 +49,14 @@ mongoose
 app.use("/api/auth", authRoutes);
 app.use("/api/user", userRoutes);
 app.use("/api/tailor", tailorRoutes);
-app.use("/uploads", express.static("uploads"));
+app.use("/api/customer", customerRoutes); //  Corrected
+
+app.use("/uploads", express.static(path.join(__dirname, "uploads"))); //  Corrected path
 
 
+app.use("/api/notifications", notificationRoutes);
+app.use("/api/orders", orderRoutes);
+app.use("/api/appointments", appointmentRoutes);
 
 
 //  Start Server

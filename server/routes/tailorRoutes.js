@@ -5,6 +5,9 @@ const {
     uploadTailorWorkSample,
     uploadProfilePic,
     uploadWorkSample,
+    removeWorkSample,
+    getTailorsByCategory,
+    getTailorProfileById,
 } = require("../controllers/tailorController");
 
 const authMiddleware = require("../middleware/authMiddleware");
@@ -19,5 +22,18 @@ router.put("/update-profile", authMiddleware, uploadProfilePic, updateTailorProf
 
 //  Upload Work Sample
 router.post("/upload-work/:id", authMiddleware, uploadWorkSample, uploadTailorWorkSample);
+
+router.delete("/remove-work/:id/:filename", authMiddleware, removeWorkSample);
+
+// Get Tailors by Category
+router.get("/category/:category", getTailorsByCategory);
+
+
+// Get Tailor Profile by ID
+router.get("/profile/:id", getTailorProfileById);
+
+
+
+
 
 module.exports = router;

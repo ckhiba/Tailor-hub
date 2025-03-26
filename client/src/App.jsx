@@ -8,7 +8,6 @@ import AuthForm from './components/AuthForm'
 import CustomerHome from './customer/CustomerHome'
 import ServicesPage from './customer/ServicesPage'
 import AboutUsPage from './customer/AboutUsPage'
-import Profile from './customer/Profile'
 import OrderDetails from './customer/OrderDetails'
 
 import TailorDashboard from './tailor/TailorDashboard'
@@ -19,6 +18,10 @@ import TailorMessengerPage from './tailor/TailorMessengerPage'
 import TailorEarnings from './tailor/TailorEarnings'
 import ViewProfile from './tailor/ViewProfile'
 import EditProfile from './tailor/EditProfile'
+import TailorList from './components/TailorList'
+import TailorProfileView from './customer/TailorProfileView'
+import EditCustomerProfile from './customer/EditCustomerProfile'
+import CustomerProfile from './customer/CustomerProfile'
 
 
 function App() {
@@ -31,8 +34,9 @@ function App() {
       <Route path="/customer/home" element={<CustomerHome />} />
       <Route path="/customer/service" element={<ServicesPage />} />
       <Route path="/customer/about" element={<AboutUsPage />} />
-      <Route path="/customer/profile" element={<Profile />} />
       <Route path="/customer/orders" element={<OrderDetails />} />
+      <Route path="/customer/profile" element={<CustomerProfile />} />
+        <Route path="/customer/edit-profile" element={<EditCustomerProfile />} />
 
 
       <Route path="/tailor/home" element={<TailorDashboard />} />
@@ -45,6 +49,9 @@ function App() {
       <Route path="/tailor/appointments" element={<AppointmentsPage />} />
       <Route path="/tailor/messages" element={<TailorMessengerPage />} />
       <Route path="/tailor/earnings" element={<TailorEarnings />} />
+
+      <Route path="/tailors/:service" element={<TailorList />} />
+      <Route path="/tailor-profile/:id" element={<TailorProfileView />} />
 
       <Route path="*" element={<h1>404 - Not Found</h1>} />
       </Routes>
