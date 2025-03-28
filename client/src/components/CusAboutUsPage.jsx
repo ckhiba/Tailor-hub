@@ -8,7 +8,7 @@ function CusAboutUsPage() {
             <div className="about-text">
                 <h1>About Us</h1>
                 <p>
-                Welcome to <b>Tailoring Hub</b>, where craftsmanship meets style.
+                Welcome to <b>STITCH HUB</b>, where craftsmanship meets style.
                 With years of experience, we specialize in creating perfectly
                 tailored outfits that reflect elegance, comfort, and uniqueness.
                 </p>

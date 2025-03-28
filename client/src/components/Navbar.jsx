@@ -41,7 +41,7 @@ const Navbar = () => {
         <nav className="navbar">
             {/* Top Section: Logo & Logout */}
             <div className="navbar-top">
-                <Link to="/customer/home" className="navbar-logo">Tailoring Hub</Link>
+                <Link to="/customer/home" className="navbar-logo">STITCH HUB</Link>
                 <button className="logout-btn" onClick={handleLogout}>Logout</button>
             </div>
 

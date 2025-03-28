@@ -15,7 +15,7 @@ const TailorNavbar = () => {
         <nav className="tailor-navbar">
             {/* Left Section - Logo */}
             <div className="navbar-top-left">
-                <Link to="/tailor-home" className="logo">Tailoring Hub</Link>
+                <Link to="/tailor-home" className="logo">STITCH HUB</Link>
             </div>
 
             {/* Right Section - Logout Button & Icons */}
