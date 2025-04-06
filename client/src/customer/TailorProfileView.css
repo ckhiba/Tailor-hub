@@ -137,32 +137,78 @@
 /* Appointment Section */
 .profile__appointment {
     margin-top: 30px;
+    padding: 20px;
+    background: #2a2a2a;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.6);
     display: flex;
-    gap: 10px;
-    align-items: center;
-    padding: 15px;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 15px;
 }
 
-/* Date Picker - Standard Style */
+/* Labels */
+.profile__label {
+    font-size: 1.1rem;
+    color: #ebc59f;
+    font-weight: bold;
+}
+
+/* Date Picker */
 .profile__appointment-date {
-    padding: 8px 12px;
-    border-radius: 5px;
+    width: 100%;
+    padding: 10px;
+    border-radius: 6px;
     border: 1px solid #ccc;
     background: #fff;
     color: #333;
     font-size: 1rem;
 }
 
-/* Appointment Button - Standard Style */
+/* Measurement Method Dropdown */
+.profile__appointment-method {
+    width: 100%;
+    padding: 10px;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+    background: #fff;
+    color: #333;
+    font-size: 1rem;
+    cursor: pointer;
+}
+
+/* Special Instructions Textarea */
+.profile__instructions {
+    width: 100%;
+    height: 100px;
+    padding: 10px;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+    background: #fff;
+    color: #333;
+    font-size: 1rem;
+    resize: none;
+}
+
+/* Estimated Delivery Date */
+.profile__delivery-date {
+    font-size: 1rem;
+    color: #5c8e8a;
+    font-weight: bold;
+}
+
+/* Appointment Button */
 .profile__appointment-btn {
-    padding: 10px 20px;
+    width: 100%;
+    padding: 12px;
     background: #5c8e8a;
     border: 1px solid #5c8e8a;
     color: white;
-    border-radius: 5px;
+    border-radius: 6px;
     cursor: pointer;
     transition: 0.3s ease;
-    font-size: 1rem;
+    font-size: 1.1rem;
+    text-align: center;
 }
 
 .profile__appointment-btn:hover {
@@ -175,6 +221,7 @@
     margin-top: 10px;
     color: #4caf50;
     font-size: 1rem;
+    font-weight: bold;
 }
 
 /* Error & Loading Messages */
@@ -226,7 +273,21 @@
         height: 90px;
     }
 
+}
+
+
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .profile__appointment {
+        padding: 15px;
+    }
+
+    .profile__label {
+        font-size: 1rem;
+    }
+
     .profile__appointment-btn {
-        width: 100%;
+        font-size: 1rem;
     }
 }

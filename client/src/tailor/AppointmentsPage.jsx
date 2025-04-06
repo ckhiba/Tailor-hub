@@ -1,68 +1,88 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
 import "./AppointmentsPage.css";
 
 const AppointmentsPage = () => {
-const navigate = useNavigate();
-const [appointments, setAppointments] = useState([
-    {
-    id: 1,
-    customerName: "Aisha Khan",
-    appointmentDate: "2025-03-15",
-    time: "10:00 AM",
-    serviceType: "Customization",
-    status: "Scheduled",
-    },
-    {
-    id: 2,
-    customerName: "John Doe",
-    appointmentDate: "2025-03-18",
-    time: "2:00 PM",
-    serviceType: "Alteration",
-    status: "Completed",
-    },
-]);
+    const navigate = useNavigate();
+    const [appointments, setAppointments] = useState([]);
 
-const viewDetails = (id) => {
-    navigate(`/appointment-details/${id}`);
-};
+    useEffect(() => {
+        fetchAppointments();
+    }, []);
 
-const selectNewAppointment = () => {
-    navigate("/new-appointment");
-};
+    // Fetch appointments from backend
+    const fetchAppointments = async () => {
+        try {
+            const response = await axios.get("/api/appointments"); // Replace with your API endpoint
+            setAppointments(response.data);
+        } catch (error) {
+            console.error("Error fetching appointments:", error);
+        }
+    };
 
-return (
-    <div className="appointments-container">
-    <h2 className="appointments-title">Appointments</h2>
-    <button className="new-appointment-btn" onClick={selectNewAppointment}>Select New Appointment</button>
-    <table className="appointments-table">
-        <thead>
-        <tr>
-            <th>Customer Name</th>
-            <th>Appointment Date</th>
-            <th>Time</th>
-            <th>Service Type</th>
-            <th>Status</th>
-            <th>View Details</th>
-        </tr>
-        </thead>
-        <tbody>
-        {appointments.map((appointment) => (
-            <tr key={appointment.id}>
-            <td>{appointment.customerName}</td>
-            <td>{appointment.appointmentDate}</td>
-            <td>{appointment.time}</td>
-            <td>{appointment.serviceType}</td>
-            <td className={appointment.status === "Completed" ? "completed" : "scheduled"}>{appointment.status}</td>
-            <td>
-                <button className="details-btn" onClick={() => viewDetails(appointment.id)}>View Details</button>
-            </td>
-            </tr>
-        ))}
-        </tbody>
-    </table>
-    </div>
-);
+    // Handle Accept or Reject
+    const updateAppointmentStatus = async (id, newStatus) => {
+        try {
+            await axios.put(`/api/appointments/${id}`, { status: newStatus });
+            setAppointments((prev) =>
+                prev.map((appointment) =>
+                    appointment.id === id ? { ...appointment, status: newStatus } : appointment
+                )
+            );
+        } catch (error) {
+            console.error("Error updating appointment status:", error);
+        }
+    };
+
+    // View appointment details
+    const viewDetails = (id) => {
+        navigate(`/appointment-details/${id}`);
+    };
+
+    return (
+        <div className="appointments-container">
+            <h2 className="appointments-title">Appointments</h2>
+            <table className="appointments-table">
+                <thead>
+                    <tr>
+                        <th>Customer Name</th>
+                        <th>Appointment Date</th>
+                        <th>Time</th>
+                        <th>Service Type</th>
+                        <th>Status</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {appointments.map((appointment) => (
+                        <tr key={appointment.id}>
+                            <td>{appointment.customerName}</td>
+                            <td>{appointment.appointmentDate}</td>
+                            <td>{appointment.time}</td>
+                            <td>{appointment.serviceType}</td>
+                            <td className={appointment.status.toLowerCase()}>{appointment.status}</td>
+                            <td>
+                                {appointment.status === "Pending" && (
+                                    <>
+                                        <button className="accept-btn" onClick={() => updateAppointmentStatus(appointment.id, "Accepted")}>
+                                            Accept
+                                        </button>
+                                        <button className="reject-btn" onClick={() => updateAppointmentStatus(appointment.id, "Rejected")}>
+                                            Reject
+                                        </button>
+                                    </>
+                                )}
+                                <button className="details-btn" onClick={() => viewDetails(appointment.id)}>
+                                    View Details
+                                </button>
+                            </td>
+                        </tr>
+                    ))}
+                </tbody>
+            </table>
+        </div>
+    );
 };
 
 export default AppointmentsPage;

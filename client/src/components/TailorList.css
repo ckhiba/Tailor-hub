@@ -167,3 +167,33 @@
         height: 120px;
     }
 }
+
+/* Search Bar */
+.search-container {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 20px;
+    width: 100%;
+}
+
+.search-input {
+    width: 100%;
+    max-width: 400px;
+    padding: 10px 15px;
+    font-size: 1rem;
+    border: 2px solid #5c8e8a;
+    border-radius: 8px;
+    outline: none;
+    background-color: #2b2b2b;
+    color: white;
+    transition: 0.3s ease-in-out;
+}
+
+.search-input::placeholder {
+    color: #aaa;
+}
+
+.search-input:focus {
+    border-color: #c78c5b;
+    box-shadow: 0 0 8px rgba(199, 140, 91, 0.5);
+}

@@ -10,6 +10,8 @@ const TailorProfileView = () => {
     const [error, setError] = useState("");
     const [selectedSample, setSelectedSample] = useState(null);
     const [appointmentDate, setAppointmentDate] = useState("");
+    const [measurementMethod, setMeasurementMethod] = useState("");
+    const [specialInstructions, setSpecialInstructions] = useState(""); // New state for instructions
     const [appointmentSuccess, setAppointmentSuccess] = useState(false);
 
     useEffect(() => {
@@ -29,9 +31,7 @@ const TailorProfileView = () => {
             const response = await axios.get(
                 `http://localhost:5000/api/tailor/profile/${id}`,
                 {
-                    headers: {
-                        Authorization: `Bearer ${token}`,
-                    },
+                    headers: { Authorization: `Bearer ${token}` },
                 }
             );
 
@@ -57,35 +57,47 @@ const TailorProfileView = () => {
         setSelectedSample(null);
     };
 
+    // Function to calculate delivery date (7 days after the appointment)
+    const calculateDeliveryDate = (appointmentDate) => {
+        if (!appointmentDate) return "";
+        const date = new Date(appointmentDate);
+        date.setDate(date.getDate() + 7); // Add 7 days
+        return date.toISOString().split("T")[0]; // Format YYYY-MM-DD
+    };
+
     // Handle Appointment Booking
     const bookAppointment = async () => {
         if (!appointmentDate) {
             alert("Please select a date for your appointment.");
             return;
         }
+        if (!measurementMethod) {
+            alert("Please select a measurement method.");
+            return;
+        }
 
         try {
-            const token = localStorage.getItem("token"); // Get JWT token from local storage
+            const token = localStorage.getItem("token");
 
             const response = await axios.post(
-                `http://localhost:5000/api/appointments/book`, // API endpoint
+                `http://localhost:5000/api/appointments/book`,
                 {
-                    tailorId: id, // Tailor ID fetched from URL
-                    date: appointmentDate, // Selected date for the appointment
+                    tailorId: id,
+                    date: appointmentDate,
+                    measurementMethod: measurementMethod,
+                    specialInstructions: specialInstructions, // Include special instructions
+                    deliveryDate: calculateDeliveryDate(appointmentDate),
                 },
                 {
-                    headers: {
-                        Authorization: `Bearer ${token}`, // Send token for auth
-                    },
+                    headers: { Authorization: `Bearer ${token}` },
                 }
             );
 
-            //  Check if the appointment was successful
             if (response.data.success) {
-                setAppointmentSuccess(true); // Show success message
-                setTimeout(() => setAppointmentSuccess(false), 3000); // Hide after 3s
+                setAppointmentSuccess(true);
+                setTimeout(() => setAppointmentSuccess(false), 3000);
             } else {
-                alert("Failed to book appointment."); // Error message if booking fails
+                alert("Failed to book appointment.");
             }
         } catch (error) {
             console.error("Error booking appointment:", error.message);
@@ -176,16 +188,41 @@ const TailorProfileView = () => {
             {/* Book Appointment Section */}
             <h3 className="profile__section-title">Book Appointment</h3>
             <div className="profile__appointment">
+                <label className="profile__label">Select Appointment Date:</label>
                 <input
                     type="date"
                     value={appointmentDate}
                     onChange={(e) => setAppointmentDate(e.target.value)}
                     className="profile__appointment-date"
                 />
-                <button
-                    className="profile__appointment-btn"
-                    onClick={bookAppointment}
+
+                <label className="profile__label">Measurement Method:</label>
+                <select
+                    className="profile__appointment-method"
+                    value={measurementMethod}
+                    onChange={(e) => setMeasurementMethod(e.target.value)}
                 >
+                    <option value="">Select Measurement Method</option>
+                    <option value="Online">Online</option>
+                    <option value="Offline">Offline</option>
+                </select>
+
+                <label className="profile__label">Special Instructions:</label>
+                <textarea
+                    className="profile__instructions"
+                    value={specialInstructions}
+                    onChange={(e) => setSpecialInstructions(e.target.value)}
+                    placeholder="Enter special instructions for the tailor (e.g., fabric type, design preferences)"
+                ></textarea>
+
+                {appointmentDate && (
+                    <p className="profile__delivery-date">
+                        <strong>Estimated Delivery Date:</strong>{" "}
+                        {calculateDeliveryDate(appointmentDate)}
+                    </p>
+                )}
+
+                <button className="profile__appointment-btn" onClick={bookAppointment}>
                     Book Appointment
                 </button>
             </div>

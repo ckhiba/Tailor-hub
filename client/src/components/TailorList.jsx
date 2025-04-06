@@ -10,6 +10,7 @@ const TailorList = () => {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState("");
     const [selectedFilter, setSelectedFilter] = useState("All");
+    const [searchLocation, setSearchLocation] = useState("");
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -37,14 +38,28 @@ const TailorList = () => {
     //  Filter Tailors
     const handleFilterChange = (filter) => {
         setSelectedFilter(filter);
-        if (filter === "All") {
-            setFilteredTailors(tailors);
-        } else {
-            const filtered = tailors.filter((tailor) =>
-                tailor.services.includes(filter)
-            );
-            setFilteredTailors(filtered);
+        filterTailors(filter, searchLocation);
+    };
+
+    // Filter Tailors by Service & Location
+    const filterTailors = (filter, location) => {
+        let filtered = tailors;
+        if (filter !== "All") {
+            filtered = filtered.filter((tailor) => tailor.services.includes(filter));
         }
+        if (location) {
+            filtered = filtered.filter((tailor) =>
+                tailor.location.toLowerCase().includes(location.toLowerCase())
+            );
+        }
+        setFilteredTailors(filtered);
+    };
+
+    // Handle Search Input
+    const handleSearchChange = (e) => {
+        const value = e.target.value;
+        setSearchLocation(value);
+        filterTailors(selectedFilter, value);
     };
 
     if (loading) return <p className="loading">Loading tailor data...</p>;
@@ -53,6 +68,17 @@ const TailorList = () => {
     return (
         <div className="tailor-list-container">
             <h3 className="section-title">Available Tailors for {service}</h3>
+
+            {/* Search Bar */}
+            <div className="search-container">
+                <input
+                    type="text"
+                    className="search-input"
+                    placeholder="Search by location..."
+                    value={searchLocation}
+                    onChange={handleSearchChange}
+                />
+            </div>
 
             {/*  Filter Buttons */}
             <div className="filter-container">
@@ -133,7 +159,6 @@ const TailorList = () => {
                                     onClick={() => navigate(`/tailor-profile/${tailor._id}`)}>
                                     View Profile
                                 </button>
-
                             </div>
                         </div>
                     ))
