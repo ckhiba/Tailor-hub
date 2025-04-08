@@ -1,9 +1,10 @@
 const express = require("express");
 const router = express.Router();
-const { bookAppointment } = require("../controllers/appointmentController");
-const protect = require("../middleware/authMiddleware");
+const appointmentController = require("../controllers/appointmentController");
 
-// Route: POST /api/appointments/book
-router.post("/book", protect, bookAppointment);
+router.post("/book", appointmentController.bookAppointment);
+router.get("/", appointmentController.getAppointments);
+router.get("/:id", appointmentController.getAppointmentById);
+router.put("/:id", appointmentController.updateStatus);
 
 module.exports = router;

@@ -4,14 +4,14 @@ import axios from "axios";
 import "./TailorProfileView.css";
 
 const TailorProfileView = () => {
-    const { id } = useParams();
+    const { id } = useParams(); // Tailor ID from URL
     const [tailor, setTailor] = useState(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState("");
     const [selectedSample, setSelectedSample] = useState(null);
     const [appointmentDate, setAppointmentDate] = useState("");
     const [measurementMethod, setMeasurementMethod] = useState("");
-    const [specialInstructions, setSpecialInstructions] = useState(""); // New state for instructions
+    const [specialInstructions, setSpecialInstructions] = useState("");
     const [appointmentSuccess, setAppointmentSuccess] = useState(false);
 
     useEffect(() => {
@@ -38,34 +38,27 @@ const TailorProfileView = () => {
             setTailor(response.data);
             setLoading(false);
         } catch (error) {
-            console.error(
-                "Error fetching tailor profile:",
-                error.response?.data?.message || error.message
-            );
+            console.error("Error fetching tailor profile:", error.response?.data?.message || error.message);
             setError("Error fetching tailor details.");
             setLoading(false);
         }
     };
 
-    // Handle sample click to open modal
     const handleSampleClick = (sample) => {
         setSelectedSample(sample);
     };
 
-    // Close sample modal
     const closeModal = () => {
         setSelectedSample(null);
     };
 
-    // Function to calculate delivery date (7 days after the appointment)
     const calculateDeliveryDate = (appointmentDate) => {
         if (!appointmentDate) return "";
         const date = new Date(appointmentDate);
-        date.setDate(date.getDate() + 7); // Add 7 days
-        return date.toISOString().split("T")[0]; // Format YYYY-MM-DD
+        date.setDate(date.getDate() + 7);
+        return date.toISOString().split("T")[0];
     };
 
-    // Handle Appointment Booking
     const bookAppointment = async () => {
         if (!appointmentDate) {
             alert("Please select a date for your appointment.");
@@ -78,16 +71,28 @@ const TailorProfileView = () => {
 
         try {
             const token = localStorage.getItem("token");
+            const user = JSON.parse(localStorage.getItem("user"));
+            const customerId = user?._id;
+
+            if (!customerId) {
+                alert("User not logged in. Please login again.");
+                return;
+            }
+
+            const deliveryDate = calculateDeliveryDate(appointmentDate);
+
+            const appointmentData = {
+                tailorId: tailor.userId, // ✅ Correct: Use User ID of tailor
+                customerId: user._id,
+                date: appointmentDate,
+                measurementMethod,
+                specialInstructions,
+                deliveryDate,
+            };
 
             const response = await axios.post(
                 `http://localhost:5000/api/appointments/book`,
-                {
-                    tailorId: id,
-                    date: appointmentDate,
-                    measurementMethod: measurementMethod,
-                    specialInstructions: specialInstructions, // Include special instructions
-                    deliveryDate: calculateDeliveryDate(appointmentDate),
-                },
+                appointmentData,
                 {
                     headers: { Authorization: `Bearer ${token}` },
                 }
@@ -95,7 +100,17 @@ const TailorProfileView = () => {
 
             if (response.data.success) {
                 setAppointmentSuccess(true);
-                setTimeout(() => setAppointmentSuccess(false), 3000);
+                setTimeout(() => setAppointmentSuccess(false), 5000);
+                const { tailor, customer } = response.data.emailStatus || {};
+
+                const emailMessage = `
+Appointment request sent successfully!
+
+Email to Tailor: ${tailor ? "✅ Sent" : "❌ Failed"}
+Email to Customer: ${customer ? "✅ Sent" : "❌ Failed"}
+                `;
+
+                alert(emailMessage);
             } else {
                 alert("Failed to book appointment.");
             }
@@ -110,7 +125,6 @@ const TailorProfileView = () => {
 
     return (
         <div className="profile__container">
-            {/* Profile Header */}
             <div className="profile__header">
                 <div className="profile__image-wrapper">
                     <img
@@ -123,32 +137,20 @@ const TailorProfileView = () => {
                 <div className="profile__info">
                     <h2 className="profile__name">{tailor.name}</h2>
                     <div className="profile__details">
-                        <p className="profile__detail-item">
-                            <strong>Email:</strong> {tailor.email}
-                        </p>
-                        <p className="profile__detail-item">
-                            <strong>Phone:</strong> {tailor.phone}
-                        </p>
-                        <p className="profile__detail-item">
-                            <strong>Location:</strong> {tailor.location}
-                        </p>
-                        <p className="profile__detail-item">
-                            <strong>Experience:</strong> {tailor.experience} years
-                        </p>
+                        <p><strong>Email:</strong> {tailor.email}</p>
+                        <p><strong>Phone:</strong> {tailor.phone}</p>
+                        <p><strong>Location:</strong> {tailor.location}</p>
+                        <p><strong>Experience:</strong> {tailor.experience} years</p>
                     </div>
                 </div>
             </div>
 
-            {/* Categories and Services */}
             <div className="profile__tags">
                 {tailor.categories.map((category, index) => (
-                    <div key={index} className="profile__tag">
-                        {category}
-                    </div>
+                    <div key={index} className="profile__tag">{category}</div>
                 ))}
             </div>
 
-            {/* Work Samples Section */}
             <h3 className="profile__section-title">Sample Work</h3>
             <div className="profile__samples">
                 {tailor.workSamples.length > 0 ? (
@@ -166,13 +168,9 @@ const TailorProfileView = () => {
                 )}
             </div>
 
-            {/* Modal to Show Enlarged Sample */}
             {selectedSample && (
                 <div className="profile__modal-overlay" onClick={closeModal}>
-                    <div
-                        className="profile__modal-content"
-                        onClick={(e) => e.stopPropagation()}
-                    >
+                    <div className="profile__modal-content" onClick={(e) => e.stopPropagation()}>
                         <span className="profile__modal-close" onClick={closeModal}>
                             &times;
                         </span>
@@ -185,10 +183,9 @@ const TailorProfileView = () => {
                 </div>
             )}
 
-            {/* Book Appointment Section */}
             <h3 className="profile__section-title">Book Appointment</h3>
             <div className="profile__appointment">
-                <label className="profile__label">Select Appointment Date:</label>
+                <label>Select Appointment Date:</label>
                 <input
                     type="date"
                     value={appointmentDate}
@@ -196,7 +193,7 @@ const TailorProfileView = () => {
                     className="profile__appointment-date"
                 />
 
-                <label className="profile__label">Measurement Method:</label>
+                <label>Measurement Method:</label>
                 <select
                     className="profile__appointment-method"
                     value={measurementMethod}
@@ -207,18 +204,17 @@ const TailorProfileView = () => {
                     <option value="Offline">Offline</option>
                 </select>
 
-                <label className="profile__label">Special Instructions:</label>
+                <label>Special Instructions:</label>
                 <textarea
                     className="profile__instructions"
                     value={specialInstructions}
                     onChange={(e) => setSpecialInstructions(e.target.value)}
-                    placeholder="Enter special instructions for the tailor (e.g., fabric type, design preferences)"
+                    placeholder="Enter special instructions (e.g., fabric type, design preferences)"
                 ></textarea>
 
                 {appointmentDate && (
                     <p className="profile__delivery-date">
-                        <strong>Estimated Delivery Date:</strong>{" "}
-                        {calculateDeliveryDate(appointmentDate)}
+                        <strong>Estimated Delivery Date:</strong> {calculateDeliveryDate(appointmentDate)}
                     </p>
                 )}
 

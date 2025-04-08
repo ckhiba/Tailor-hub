@@ -3,7 +3,7 @@ const mongoose = require("mongoose");
 const appointmentSchema = new mongoose.Schema({
     tailorId: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: "Tailor",
+        ref: "User",
         required: true,
     },
     customerId: {
@@ -12,16 +12,20 @@ const appointmentSchema = new mongoose.Schema({
         required: true,
     },
     date: {
-        type: Date,
+        type: String,
         required: true,
     },
-    instructions: {
-        type: String, // Customer's custom instructions
-        default: "",
+    measurementMethod: {
+        type: String,
+        enum: ["Online", "Offline"],
+        required: true,
     },
-    measurements: {
-        type: Map,
-        of: String, // Store as key-value pairs
+    specialInstructions: String,
+    deliveryDate: String,
+    status: {
+        type: String,
+        enum: ["Pending", "Accepted", "Rejected"],
+        default: "Pending",
     },
 });
 

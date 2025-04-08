@@ -14,9 +14,9 @@ return (
     <div className="home-container">
 <div className="overlay"></div>
 <div className="content">
-  <h1>Welcome to Tailoring Hub</h1>
+  <h1>Welcome to STITCH HUB</h1>
   <p>Experience the best custom tailoring services with us.</p>
-  <button className="explore-btn">Explore Now</button>
+  {/* <button className="explore-btn">Explore Now</button> */}
 </div>
 </div>
 
